@@ -1,0 +1,47 @@
+<header>
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container">
+      <span class="navbar-brand">Meka</span>
+      <button class="navbar-toggler" type="button" aria-controls="navbarContent"
+        [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
+        <ul class="navbar-nav">
+          <ng-container *ngFor="let menu of menus">
+            <li *ngIf="menu.children; else navItem" class="nav-item" ngbDropdown>
+              <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdown1" role="button">
+                {{ menu.name }}
+              </a>
+              <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
+                <a *ngFor="let submenu of menu.children" ngbDropdownItem
+                  [routerLink]="[submenu.url]" routerLinkActive="router-link-active" >
+                  {{ submenu.name }}</a>
+              </div>
+            </li>
+            <ng-template #navItem>
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="[menu.url]" routerLinkActive="router-link-active">
+                  {{ menu.name }}
+                </a>
+              </li>
+            </ng-template>
+          </ng-container>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li  class="nav-item">
+            <a class="nav-link">
+              Luis Tomas
+            </a>
+          </li>
+          <li  class="nav-item">
+            <a class="nav-link">
+              Salir del Sistema
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

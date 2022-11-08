@@ -1,0 +1,49 @@
+.titulo {
+  border-bottom: .5px solid #e0e0e0;
+  margin-bottom: 1.5rem;
+  padding-bottom: .75rem;
+}
+
+.code {
+  padding: .5rem;
+  border-radius: 10px;
+  text-align: center;
+  background: #000;
+  font-size: .75rem;
+  color: #ebd214;
+}
+
+.rating {
+  text-align: center;
+  p {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    span {
+      border-bottom: 1px solid #989898;
+    }
+  }
+  fa-icon {
+    margin-left: 1rem;
+    font-size: 2.5rem;
+  }
+}
+
+.total {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  p {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    span {
+      margin-bottom: .75rem;
+      padding: 0 1rem;
+      border-bottom: 1px solid #989898;
+    }
+  }
+  fa-icon {
+    margin-left: 1rem;
+    font-size: 2.5rem;
+  }
+}

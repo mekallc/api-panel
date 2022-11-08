@@ -1,0 +1,40 @@
+<div class="container">
+  <h2 class="titulo">
+    Models
+  </h2>
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-9">
+      <app-datatable
+        [table]="table"
+        [options]="dtOptions"
+        [actions]="['edit', 'trash']"
+        [data]="(models$ | async)"
+        (setEdit)="onEdit($event)"
+        (setTrash)="onTrash($event)"
+      ></app-datatable>
+    </div>
+    <div class="col-lg-4 col-xl-3">
+      <div id="form">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <formly-form
+            [form]="form"
+            [model]="model"
+            [fields]="fields">
+          </formly-form>
+          <div id="actions" class="row g-2">
+            <div class="col-md-6">
+              <button class="btn btn-primary w-100" type="submit">
+                salvar
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button class="btn btn-outline-danger w-100" type="reset">
+                cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

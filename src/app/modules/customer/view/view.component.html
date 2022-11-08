@@ -1,0 +1,48 @@
+<ng-container *ngIf="(user$ | async) as user">
+  <h3 class="titulo">{{ user.first_name }} {{ user.last_name }}</h3>
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <table class="table table-hover table-striped table-condensed">
+        <tr><th>Teléfono</th><th>Correo Electronico</th> </tr>
+        <tr>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.email }}</td>
+        </tr>
+        <tr> <th>Pais</th><th>Codigo</th> </tr>
+        <tr>
+          <td>{{ user.country.name }}</td>
+          <td>{{ user.country.phone_code }}</td>
+        </tr>
+      </table>
+      <h6>Push</h6>
+      <div class="code">
+        {{ user.push }}
+      </div>
+    </div>
+    <div class="col-md-5 align-self-center">
+      <div class="total">
+        <p>
+          <span>Servicios: {{ totalServices }}</span>
+        </p>
+      </div>
+      <div class="rating">
+        <p>{{ 4.3 }}
+          <fa-icon class="mx-1 star" [icon]="['fas', 'star']" class="text-warning"></fa-icon>
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<div class="services mt-4">
+  <h3 class="titulo mb-2">Servicios</h3>
+  <div class="row justify-content-center">
+    <div class="col-xl-12">
+      <app-datatable
+        [table]="table"
+        [options]="dtOptions"
+        [actions]="[]"
+        [data]="(services$ | async)"
+      ></app-datatable>
+    </div>
+  </div>
+</div>

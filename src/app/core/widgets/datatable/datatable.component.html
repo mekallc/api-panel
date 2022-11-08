@@ -1,0 +1,29 @@
+<ng-container *ngIf="data">
+  <table datatable [dtOptions]="dtOptions" class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th *ngFor="let item of table.title"> {{ item }}</th>
+        <th *ngIf="status">Status</th>
+        <th *ngIf="actions.length > 0">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data; let index = index">
+        <td>{{ index + 1 }}</td>
+        <ng-container *ngFor="let data of table.data">
+          <td [innerHTML]="parseData(item, data)"></td>
+        </ng-container>
+        <td class="text-center" *ngIf="status">
+          <fa-icon [icon]="['fas', 'circle']"
+          [ngClass]="item.status ? 'text-success': 'text-danger'"></fa-icon>
+        </td>
+        <td *ngIf="actions.length > 0" class="text-center">
+          <fa-icon class="mx-1" *ngIf="validate('view')" [icon]="['far', 'eye']" (click)="onView(item)"></fa-icon>
+          <fa-icon class="mx-1" *ngIf="validate('edit')" [icon]="['far', 'pen-to-square']" (click)="onEdit(item)"></fa-icon>
+          <fa-icon class="mx-1" *ngIf="validate('trash')" [icon]="['far', 'trash-can']" class="text-danger" (click)="onTrash(item)"></fa-icon>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>

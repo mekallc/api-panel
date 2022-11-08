@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import 'ngx-toastr/toastr';
+
+.titulo {
+  margin-bottom: 2rem;
+  padding-bottom: .5rem;
+  border-bottom: .5px solid #e1e1e1;
+}
+
+#form {
+  padding: 1.5rem;
+  background: #e0e0e0;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, .4);
+  border-radius: 0px 15px 15px 0;
+  #actions {
+    button {
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+  }
+}
+
+google-map {
+  div {
+    border-radius: 10px;
+  }
+}
