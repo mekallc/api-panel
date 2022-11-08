@@ -49,7 +49,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: 22
-          local_path: ./dist/
+          local_path: ./dist/admin/
           remote_path: /root/services/api-panel/
           sftp_only: true
           sftpArgs: '-o ConnectTimeout=5'
