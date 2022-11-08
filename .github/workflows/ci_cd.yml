@@ -43,15 +43,16 @@ jobs:
         run: |
           npm run build --prod
       - name: Sync Files
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: 22
           local-dir: ./dist/
-          server-dir: /root/services/
-          dangerous-clean-slate: true
+          remote_path: /root/services/
+          sftp_only: true
+          sftpArgs: '-o ConnectTimeout=5'
       # - name: Deploy Server
       #   uses: appleboy/ssh-action@master
       #   with:
