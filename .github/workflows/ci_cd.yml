@@ -49,7 +49,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           local-dir: ./dist/
-          server-dir: /root/services/api-panel
+          server-dir: /root/services/
           dangerous-clean-slate: true
       # - name: Deploy Server
       #   uses: appleboy/ssh-action@master
