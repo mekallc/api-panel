@@ -41,7 +41,7 @@ jobs:
           npm ci
       - name: Build
         run: |
-          npm run build -- --prod
+          npm run build --prod
       - name: Lint
         run: |
           npm run lint
@@ -51,7 +51,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
-          port: 22
           script: |
             cd /root/services/panel
             git pull origin main
