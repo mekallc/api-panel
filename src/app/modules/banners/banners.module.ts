@@ -11,9 +11,9 @@ import { ActionComponent } from './action/action.component';
 import { DatatableModule } from '@core/widgets/datatable/datatable.module';
 
 const app: Routes = [
-  { path: '', component: BannersComponent },
+  // { path: '', component: BannersComponent },
   { path: 'view/:uid', component: ViewComponent },
-  { path: 'create', component: ActionComponent },
+  { path: '', component: ActionComponent },
   { path: 'update/:uid', component: ActionComponent },
 ];
 

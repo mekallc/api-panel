@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'https://api.keycloak.do/api/v2',
+  url: 'https://api.meka.do/api/v2',
   maps: 'AIzaSyAylhtwYmgO_nuFZsQzvm_z6vAOvbEk80Q'
 };
 

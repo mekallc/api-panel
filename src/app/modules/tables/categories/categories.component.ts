@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ConnectService } from '@core/services/connect.service';
 import { CategoriesFormlyJson, CategoriesTableJson } from './categories.data';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 
 @Component({
@@ -39,13 +39,25 @@ export class CategoriesComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log(this.form.value);
+      const value: any = this.form.value;
+      this.connService.postData('tables/categories', value)
+      .pipe(catchError(async (error: any) => {
+
+      }))
+      .subscribe((res: any) => {
+
+      })
     }
   }
 
   onView(ev: any) {
     console.log(ev);
   }
+
+  onSave(data: any) {
+
+  }
+
   onEdit(ev: any) {
     this.form.reset();
     console.log(ev);

@@ -50,7 +50,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 22
           local_path: ./dist/api-panel
-          remote_path: /root/services/api-panel/
+          remote_path: /var/www/html/api-painel/
           sftp_only: true
           sftpArgs: '-o ConnectTimeout=5'
       # - name: Deploy Server
