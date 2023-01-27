@@ -16,5 +16,6 @@ export const MenuDataJson = [
     ]
   },
   { name: 'Services', url: '' },
+  { name: 'Chat Soporte', url: '' },
 ]
 

@@ -1,0 +1,99 @@
+<ng-container *ngIf="(company$ | async) as company">
+  <h3 class="titulo">
+    {{ company.name | titlecase }}:
+    {{ company.user.first_name }} {{ company.user.last_name }}
+  </h3>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="user">
+        <div class="item">
+          <p>
+            <strong>Teléfono:</strong>
+            (+{{ company.user.country.phone_code }}) {{ company.user.phone }}
+          </p>
+        </div>
+        <div class="item">
+          <p>
+            <strong>Correo Eléctronico:</strong>
+            {{ company.user.email }}
+          </p>
+        </div>
+        <div class="item">
+          <p>
+            <strong>País:</strong>
+            {{ company.user.country.name }}
+          </p>
+        </div>
+        <div class="item">
+          <p>
+            <strong>Score:</strong>
+            {{ company.user.score }}
+            <fa-icon class="mx-1 star" [icon]="['fas', 'star']" class="text-warning"></fa-icon>
+          </p>
+        </div>
+        <div class="item">
+          <p>
+            <strong>Token PUSH:</strong>
+          </p>
+          <p class="code">{{ company.user.push }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="user bg-grey">
+        <div class="item">
+          <p>
+            <strong>Status:</strong>
+            {{ company.status ? 'Activo' : 'Inactivo'}}
+          </p>
+        </div>
+        <div class="item">
+          <p>
+            <strong>Tipo Compañia:</strong>
+            {{ company.typeCompany.name | titlecase }}
+          </p>
+        </div>
+        <div class="item">
+          <p>
+            <strong>Categorias: </strong>
+            <span *ngFor="let category of company.categories">{{ category.name }}, </span>
+          </p>
+        </div>
+        <div class="item">
+          <p>
+            <strong>Métodos de Pago:</strong>
+            <span *ngFor="let paid of company.payment"> {{ paid }}, </span>
+
+          </p>
+        </div>
+        <ng-container *ngIf="company.typeCompany.type !== 1">
+          <div class="item">
+            <p>
+              <strong>Dirección:</strong>
+              {{ company.address }}
+            </p>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<div class="services mt-5">
+  <h3 class="titulo servico mb-2">Servicios
+    <span class="float-right">
+      Total: {{ totalServices }}
+      {{ totalServices > 1 ? 'servicios' : 'servicio' }}
+    </span>
+  </h3>
+  <div class="row justify-content-center">
+    <div class="col-xl-12">
+      <app-datatable
+        [table]="table"
+        [options]="dtOptions"
+        [actions]="[]"
+        [data]="(services$ | async)"
+      ></app-datatable>
+    </div>
+  </div>
+</div>
+

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ConnectService } from '@core/services/connect.service';
+import { UtilsService } from '@core/services/utils.service';
 import { ModelsFormlyJson, ModelsTableJson } from '@module/tables/models/models.data';
 import { Observable } from 'rxjs';
 
@@ -20,7 +21,8 @@ export class ModelsComponent implements OnInit {
   models$!: Observable<any[]>;
 
   constructor(
-    private connService: ConnectService,
+    private ms: ConnectService,
+    private uService: UtilsService
   ) {}
 
   ngOnInit(): void {
@@ -32,14 +34,19 @@ export class ModelsComponent implements OnInit {
       pagingType: 'full_numbers'
     }
     this.table = ModelsTableJson;
-    this.models$ = this.connService.getData('tables/models');
-    this.connService.getData('tables/brands').subscribe(res =>
+    this.models$ = this.ms.getData('tables/models');
+    this.ms.getData('tables/brands').subscribe(res =>
       this.fields[1]['templateOptions'].options = res );
   }
 
   onSubmit() {
     if (this.form.valid) {
-      console.log(this.form.value);
+      const value: any = this.form.value;
+      if (value._id) {
+        this.save(this.form.value);
+      } else {
+        this.add(this.form.value);
+      }
     }
   }
 
@@ -48,11 +55,59 @@ export class ModelsComponent implements OnInit {
   }
   onEdit(ev: any) {
     this.form.reset();
-    console.log(ev);
-    this.form.setValue(ev);
+    this.form.patchValue({
+      _id: ev._id,
+      brand: ev.brandId._id,
+      name: ev.name
+    });
   }
   onTrash(ev: any) {
-    console.log(ev);
+    this.uService.setAlert({
+      title: 'Estas seguro?',
+      text: "Quieres eliminar este modelo!",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, quiero eliminar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ms.deleteData(`tables/models/${ev._id}`).
+        subscribe(() => {
+          this.uService.setAlert({
+            icon: 'success',
+            title: 'Eliminado!',
+            text: 'Tu modelo fue eliminado.',
+          })
+        })
+      }
+    });
+    this.models$ = this.ms.getData('tables/models');
   }
 
+  private add(item: any) {
+    const data = {
+      name: item.name,
+      status: item.status,
+      brandId: item.brand
+    }
+    this.ms.postData('tables/models', data)
+    .subscribe((res: any) => {
+      this.uService.setToast('success', 'Se creo de forma exitosa!', 'Exito!');
+    })
+    this.models$ = this.ms.getData('tables/models');
+
+  }
+  private save(item: any) {
+    const data = {
+      name: item.name,
+      status: item.status,
+      brandId: item.brand,
+    }
+    this.ms.patchData(`tables/models/${item._id}`, data)
+    .subscribe((res: any) => {
+      this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
+    })
+    this.models$ = this.ms.getData('tables/models');
+  }
 }

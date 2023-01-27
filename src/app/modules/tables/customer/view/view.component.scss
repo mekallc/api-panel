@@ -5,12 +5,13 @@
 }
 
 .code {
-  padding: .5rem;
+  padding: 1rem;
   border-radius: 10px;
-  text-align: center;
+  text-align: left;
   background: #000;
   font-size: .75rem;
   color: #ebd214;
+  word-wrap: break-word;
 }
 
 .rating {

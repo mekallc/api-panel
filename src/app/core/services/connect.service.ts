@@ -21,4 +21,8 @@ export class ConnectService {
   patchData(query: string, data: any): Observable<any> {
     return this.http.patch<any>(`${url}/${query}`, data);
   }
+
+  deleteData(query: string): Observable<any> {
+    return this.http.delete<any>(`${url}/${query}`)
+  }
 }

@@ -18,7 +18,12 @@ const app: Routes = [
       {
         path: 'customers',
         loadChildren: () =>
-          import('@module/customer/customer.module').then( m => m.CustomerModule)
+          import('@module/tables/customer/customer.module').then( m => m.CustomerModule)
+      },
+      {
+        path: 'companies',
+        loadChildren: () =>
+          import('@module/tables/companies/companies.module').then( m => m.CompaniesModule)
       },
       {
         path: 'banners',

@@ -19,9 +19,9 @@
           [ngClass]="item.status ? 'text-success': 'text-danger'"></fa-icon>
         </td>
         <td *ngIf="actions.length > 0" class="text-center">
-          <fa-icon class="mx-1" *ngIf="validate('view')" [icon]="['far', 'eye']" (click)="onView(item)"></fa-icon>
-          <fa-icon class="mx-1" *ngIf="validate('edit')" [icon]="['far', 'pen-to-square']" (click)="onEdit(item)"></fa-icon>
-          <fa-icon class="mx-1" *ngIf="validate('trash')" [icon]="['far', 'trash-can']" class="text-danger" (click)="onTrash(item)"></fa-icon>
+          <fa-icon class="mx-2 cursor" *ngIf="validate('view')" [icon]="['far', 'eye']" (click)="onView(item)"></fa-icon>
+          <fa-icon class="mx-2 cursor" *ngIf="validate('edit')" [icon]="['far', 'pen-to-square']" (click)="onEdit(item)"></fa-icon>
+          <fa-icon class="mx-2 cursor" *ngIf="validate('trash')" [icon]="['far', 'trash-can']" class="text-danger" (click)="onTrash(item)"></fa-icon>
         </td>
       </tr>
     </tbody>

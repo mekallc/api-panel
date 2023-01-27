@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConnectService } from '@core/services/connect.service';
-import { ServicesTableJson } from '@module/customer/customer.data';
-import { Observable, tap } from 'rxjs';
+import { ServicesTableJson } from '../companies.data';
+import { map, Observable, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-view',
@@ -14,8 +14,10 @@ export class ViewComponent implements OnInit {
   table:any = [];
   dtOptions: DataTables.Settings = {};
   user$!: Observable<any>;
+  company$!: Observable<any>;
   services$!: Observable<any[]>;
   totalServices = 0;
+  companyId!: string;
 
   constructor(
     private connService: ConnectService,
@@ -30,10 +32,17 @@ export class ViewComponent implements OnInit {
   }
 
   getData(uid: string) {
-    this.user$ = this.connService.getData(`users/${uid}`);
-    this.services$ = this.connService.getData(`services/user/list/${uid}`)
-    .pipe(tap((res: any) => {
-      this.totalServices = res.length;
-    }));
+    const company$ = this.connService.getData(`companies/user/${uid}`)
+    this.company$ = company$;
+
+    this.services$ = company$.pipe(
+      switchMap((res: any) =>
+        this.connService.getData(`services/company/${res._id}`)
+        .pipe(tap((res: any) => {
+          this.totalServices = res.length;
+        }))
+      )
+    );
+    this.company$.subscribe(res => console.log(res));
   }
 }

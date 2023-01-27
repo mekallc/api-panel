@@ -1,0 +1,16 @@
+<div class="container">
+  <h2 class="titulo">
+    Compañias
+  </h2>
+  <div class="row justify-content-center">
+    <div class="col-xl-12">
+      <app-datatable
+        [table]="table"
+        [options]="dtOptions"
+        [actions]="['view']"
+        [data]="(items$ | async)"
+        (setView)="onView($event)"
+      ></app-datatable>
+    </div>
+  </div>
+</div>
