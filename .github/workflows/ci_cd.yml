@@ -36,7 +36,7 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
         with:
           source: "./dist/api-panel"
-          target: "/var/www/html/api-painel/"
+          target: "/var/www/html"
           strip_components: 2
 
 # name: Angular Panel Administrativo
