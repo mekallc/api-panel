@@ -18,17 +18,22 @@ const app: Routes = [
       {
         path: 'customers',
         loadChildren: () =>
-          import('@module/tables/customer/customer.module').then( m => m.CustomerModule)
+          import('@module/customer/customer.module').then( m => m.CustomerModule)
       },
       {
         path: 'companies',
         loadChildren: () =>
-          import('@module/tables/companies/companies.module').then( m => m.CompaniesModule)
+          import('@module/companies/companies.module').then( m => m.CompaniesModule)
       },
       {
         path: 'banners',
         loadChildren: () =>
           import('@module/banners/banners.module').then( m => m.BannersModule)
+      },
+      {
+        path: 'services',
+        loadChildren: () =>
+          import('@module/services/services.module').then( m => m.ServicesModule)
       },
     ],
   },

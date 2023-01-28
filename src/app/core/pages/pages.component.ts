@@ -13,7 +13,5 @@ export class PagesComponent implements OnInit {
   }
 
 
-  canActivate(ev: any) {
-    console.log(ev);
-  }
+  canActivate(ev: any) { }
 }

@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 
 import { AppRoute } from 'src/app/app.routes';
 import { CoreModule } from '@core/core.module';
+import { FireModule } from '@core/fire.module';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { CoreModule } from '@core/core.module';
   imports: [
     AppRoute,
     CoreModule,
+    FireModule,
     BrowserModule,
     BrowserAnimationsModule,
   ],

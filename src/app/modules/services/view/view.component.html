@@ -1,0 +1,118 @@
+<ng-container *ngIf="(service$ | async) as service">
+  <h3 class="titulo">
+    Servicio: {{ service._id }}
+    <span>{{ service.status | uppercase }}</span>
+  </h3>
+  <div class="row justify-content-center">
+    <div class="col-xl-10">
+      <div class="service">
+        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>Servicio</a>
+            <ng-template ngbNavContent>
+              <div class="row justify-content-center">
+                <div class="col-md-5 mb-3">
+                  <div class="mt-4">
+                    <h3><strong>{{service.category.name}}</strong></h3>
+                    <!-- <p><strong>Creado:</strong> {{ service.createdAt | date: 'dd-MM-yyyy; HH:mm' }}</p> -->
+                    <p><strong>Marca:</strong> {{ service.brand.name }}</p>
+                    <p><strong>Modelo:</strong> {{ service.model.name }}</p>
+                    <p><strong>Año:</strong> {{ service.year }}</p>
+                  </div>
+                </div>
+                <div class="col-md-5 mb-3">
+                  <div class="mt-4">
+                    <p>({{service.latitude}}, {{service.longitude}})</p>
+                    <p>
+                      <a target="_blank" href="https://maps.google.com/?q={{service.latitude}},{{service.longitude}}">
+                        Ver mapas
+                      </a>
+                    </p>
+                    <p><strong>Descripción:</strong> {{ service.description }}</p>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>Cliente</a>
+            <ng-template ngbNavContent>
+              <div class="row justify-content-center">
+                <div class="col-md-10 mb-3">
+                  <div class="mt-4">
+                    <h4>
+                      <strong>
+                        {{service.user.first_name | titlecase}}
+                        {{service.user.last_name | titlecase}}
+                      </strong>
+                    </h4>
+                    <p><strong>Correo Electrónico:</strong> {{ service.user.email }}</p>
+                    <p><strong>Teléfono:</strong> {{ service.user.phone }}</p>
+                    <h4><strong>Score:</strong> {{ service.user.score }}</h4>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>Compañia</a>
+            <ng-template ngbNavContent>
+              <div class="row justify-content-center">
+                <div class="col-md-10 mb-3">
+                  <div class="mt-4">
+                    <h4>
+                      <strong>
+                        {{service.company.name | titlecase}}
+                      </strong>
+                    </h4>
+                    <p><strong>Tipo Compañia:</strong> {{ service.company.typeCompany.name | titlecase }}</p>
+                    <p><strong>Categorias:</strong>
+                      <span *ngFor="let cat of service.company.categories">
+                        {{ cat.name }},
+                      </span>
+                    </p>
+                    <p><strong>Método Pago:</strong>
+                      <span *ngFor="let paid of service.company.payment">
+                        {{ paid }},
+                      </span>
+                    </p>
+                    <h4><strong>Score:</strong> {{ service.company.user.score }}</h4>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="4">
+            <a ngbNavLink>CHAT</a>
+            <ng-template ngbNavContent>
+              <div class="row justify-content-center">
+                <div class="col-md-10">
+                  <ul class="list-unstyled">
+                    <ng-container *ngFor="let msg of chat$ | async">
+                      <li class="bubble" [ngClass]="msg.type_user === 1 ? 'company:' : 'customer:'">
+                        <small>
+                          {{ msg.createdAt.seconds * 1000 | amLocale: 'es' | amTimeAgo }}
+                        </small>
+                        <h5 class="name mb-0">
+                          <strong>
+                            {{ msg.type_user === 1 ? 'Compañia' : 'Cliente' }}
+                          </strong>
+                        </h5>
+                        <p *ngIf="msg.type_message ==='MSG'">{{ msg.message }}</p>
+                        <p *ngIf="msg.type_message ==='IMG'">
+                          <img [src]="msg.message" class="img" alt="Image">
+                        </p>
+                        <p></p>
+                      </li>
+                    </ng-container>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+      </div>
+    </div>
+  </div>
+</ng-container>

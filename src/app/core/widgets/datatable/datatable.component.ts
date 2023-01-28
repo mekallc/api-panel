@@ -1,9 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-datatable',
   templateUrl: './datatable.component.html',
-  styleUrls: ['./datatable.component.scss']
+  styleUrls: ['./datatable.component.scss'],
+  providers: [DatePipe]
 })
 export class DatatableComponent implements OnInit {
 
@@ -18,6 +20,10 @@ export class DatatableComponent implements OnInit {
   @Output() setTrash = new EventEmitter<object>();
 
   dtOptions: DataTables.Settings = { };
+
+  constructor(
+    private dp: DatePipe,
+  ) {}
 
   ngOnInit(): void {
     this.dtOptions = this.options;
@@ -45,6 +51,12 @@ export class DatatableComponent implements OnInit {
     if (data.includes('.')) {
       const column = data.split('.');
       return this.setImage(item[column[0]][column[1]]);
+    }
+    if (data.includes('createdAt')) {
+      return this.dp.transform(item[data], 'dd-MM-yyyy | HH:mm', 'es-ES');
+    }
+    if (data.includes('_id')) {
+      return item[data].slice(0, 7);
     }
     return this.setImage(item[data]);
   }

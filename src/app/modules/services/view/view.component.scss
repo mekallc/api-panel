@@ -1,0 +1,33 @@
+.border-box {
+  border: .5px solid #ececec;
+}
+
+.titulo {
+  span {
+    float: right;
+    font-weight: 700;
+    color: rgb(150, 5, 5);
+  }
+}
+
+.service {
+  .box {
+    padding: .75rem;
+    border-radius: 10px;
+    border: .5px solid #e5e5e5;
+    p {
+      margin-bottom: .35rem;
+    }
+    .title {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+  }
+}
+
+.bubble {
+  margin: 1.5rem 0;
+  border-bottom: .5px solid #e5e5e5;
+}

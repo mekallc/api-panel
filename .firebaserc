@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "meka-app": {
+      "hosting": {
+        "admin": [
+          "meka-app"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "meka-app"
+  }
+}

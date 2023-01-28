@@ -105,8 +105,21 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "admin:build:production",
+            "firebaseProject": "meka-app",
+            "firebaseHostingSite": "meka-app"
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "044c1aad-2d8c-4c5d-8594-8f3949ebfbbc"
   }
 }

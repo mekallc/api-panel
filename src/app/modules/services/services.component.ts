@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConnectService } from '@core/services/connect.service';
-import { CompaniesTableJson } from '@module/tables/companies/companies.data';
 import { Observable } from 'rxjs';
+import { ServicesTableJson, Title } from './services.data';
 
 @Component({
-  selector: 'app-companies',
-  templateUrl: './companies.component.html',
-  styleUrls: ['./companies.component.scss']
+  selector: 'app-services',
+  templateUrl: './services.component.html',
+  styleUrls: ['./services.component.scss']
 })
-export class CompaniesComponent implements OnInit {
+export class ServicesComponent implements OnInit {
+  title = Title;
   table:any = [];
   dtOptions: DataTables.Settings = {};
   items$!: Observable<[]>;
@@ -26,17 +27,15 @@ export class CompaniesComponent implements OnInit {
     this.dtOptions = {
       pagingType: 'full_numbers'
     }
-    this.table = CompaniesTableJson;
-    this.items$ = this.connService.getData('users/companies')
-    this.items$.subscribe(res => console.log(res));
+    this.table = ServicesTableJson,
+    this.items$ = this.connService.getData('services')
   }
 
   onView(ev: any) {
-    this.router.navigate(['pages', 'companies', 'view', ev._id])
+    this.router.navigate(['pages', 'services', 'view', ev._id])
   }
 
   onEdit(ev: any) {}
 
   onTrash(ev: any) {}
-
 }
