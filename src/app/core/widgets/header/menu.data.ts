@@ -13,6 +13,6 @@ export const MenuDataJson = [
   { name: 'Banner', url: 'banners' },
 
   { name: 'Servicios', url: 'services' },
-  { name: 'Chat Soporte', url: '' },
+  { name: 'Chat Soporte', url: 'soporte' },
 ]
 

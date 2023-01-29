@@ -35,6 +35,11 @@ const app: Routes = [
         loadChildren: () =>
           import('@module/services/services.module').then( m => m.ServicesModule)
       },
+      {
+        path: 'soporte',
+        loadChildren: () =>
+          import('@module/soporte/soporte.module').then( m => m.SoporteModule)
+      },
     ],
   },
   { path: '', redirectTo: '/pages/home', pathMatch: 'full' },

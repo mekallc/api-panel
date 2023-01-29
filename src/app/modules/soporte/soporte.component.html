@@ -1,0 +1,51 @@
+<section id="soporte">
+  <div class="row justify-content-center">
+    <div class="col-md-4 col-lg-3">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <h5 class="mb-0 text-center"><strong>Usuários</strong></h5>
+        </li>
+        <ng-container *ngFor="let room of rooms$ | async">
+          <li class="list-group-item list-group-item-action" (click)="getChat(room.id)">
+            <h6>{{ room.first_name }} {{ room.last_name }}</h6>
+            <p class="mb-0">{{ room.type_user === 1 ? 'Compañia' : 'Cliente' }}</p>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="col-md-8 col-lg-9">
+      <ng-container *ngIf="( chats$ | async ); else notShow">
+        <div class="input-group mb-3">
+          <input [(ngModel)]="text" type="text" class="form-control" aria-describedby="enviar"
+            placeholder="Escribe tu mensaje..." aria-label="Escribe tu mensaje..."
+            (keydown)="sendPress($event)">
+          <button class="btn btn-primary" type="button" id="enviar" (click)="send()">Enviar</button>
+        </div>
+        <div class="box-chat">
+          <ng-container *ngFor="let item of chats$ | async">
+            <div [ngClass]="item.type_user === 1 ? 'from' : 'to'">
+              <div class="avatar" *ngIf="item.type_user === 1">
+                <fa-icon [icon]="['fas', 'circle']" class="text-muted"></fa-icon>
+              </div>
+              <div class="message">
+                <p class="date">
+                  {{ item.createdAt.seconds * 1000 | amLocale: 'es' | amTimeAgo }}
+                </p>
+                <p class="msg">{{ item.message }}</p>
+              </div>
+              <div class="avatar" *ngIf="item.type_user === 2">
+                <fa-icon [icon]="['fas', 'circle']"
+                  [ngClass]="item.view_message ? 'text-success' : 'text-muted'"></fa-icon>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-template #notShow>
+        <div class="icon">
+          <fa-icon [icon]="['fas', 'magnifying-glass']"></fa-icon>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</section>
