@@ -1,15 +1,18 @@
 import { Injectable } from "@angular/core";
 import * as fs from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { map, Observable, switchMap } from 'rxjs';
-
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class FireService {
-  constructor(private fireStore: Firestore) {}
+  constructor(
+    private fireStore: Firestore,
+    private auth: AngularFireAuth,
+  ) { }
 
   getChatByService(uid: string) {
     const query = fs.query(
@@ -45,5 +48,28 @@ export class FireService {
     }
     const document = fs.collection(this.fireStore, `soporte/${uid}/chat`);
     return fs.addDoc(document, data);
+  }
+
+  // Authentication
+  async login(email: string, password: string) {
+    try {
+      const item: any = await this.auth.signInWithEmailAndPassword(email, password);
+      return item.user;
+    } catch(error: any) {
+      return error.code;
+    }
+  }
+
+  async forgotPassword(email: string) {
+    try {
+      await this.auth.sendPasswordResetEmail(email)
+      return 'Correo electrónico enviado!';
+    } catch(error: any) {
+      return error.code;
+    }
+  }
+
+  async logout() {
+    this.auth.signOut();
   }
 }

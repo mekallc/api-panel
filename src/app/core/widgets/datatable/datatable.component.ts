@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   providers: [DatePipe]
 })
 export class DatatableComponent implements OnInit {
-
+  @Input() id = true;
   @Input() status = true;
   @Input() actions: any;
   @Input() data: any;
@@ -55,7 +55,7 @@ export class DatatableComponent implements OnInit {
     if (data.includes('createdAt')) {
       return this.dp.transform(item[data], 'dd-MM-yyyy | HH:mm', 'es-ES');
     }
-    if (data.includes('_id')) {
+    if (data.includes('_id') && this.id) {
       return item[data].slice(0, 7);
     }
     return this.setImage(item[data]);

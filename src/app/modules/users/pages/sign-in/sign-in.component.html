@@ -1,1 +1,53 @@
-<p>sign-in works!</p>
+<div class="container position-relative vh-100">
+  <div class="row justify-content-center h-100">
+    <div class="col-md-6 col-lg-5 align-self-center">
+      <div class="avatar">
+        <img src="./assets/images/logo.png" alt="Logo" class="img-thumbnail">
+      </div>
+      <div class="card">
+        <div class="card-body pt-4">
+          <form [formGroup]="form">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="email">
+            </div>
+            <div class="">
+              <label for="pass" class="form-label">Password <span class="text-danger">*</span></label>
+              <input type="password" class="form-control" id="pass" placeholder="*******" formControlName="password">
+            </div>
+            <div class="text-center py-3">
+              <p class="text-danger"><strong>{{ item }}</strong></p>
+              <button [disabled]="form.invalid" class="btn btn-primary mx-2" (click)="onSubmit()">Entrar al Sistema</button>
+              <button (click)="open(content)" type="button" class="btn btn-outline-danger mx-2">Olvide mi contraseña</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <div class="text-center">
+      <p class="small">@2023 GuayoyoLTDA. Todos los derechos reservados</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Recuperar mi contraseña</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+    <form [formGroup]="formPass">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+        <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="email">
+      </div>
+		</form>
+	</div>
+	<div class="modal-footer">
+    <div class="d-grid gap-2 col-6">
+      <button [disabled]="formPass.invalid" type="button" class="btn btn-danger" (click)="onForgot()">Solicitar</button>
+    </div>
+	</div>
+</ng-template>

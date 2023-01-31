@@ -1,3 +1,4 @@
+import { FireService } from '@core/services/fire.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuDataJson } from '@core/widgets/header/menu.data';
@@ -13,7 +14,8 @@ export class HeaderComponent implements OnInit {
   collapsed = true;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private fireService: FireService,
   ) { }
 
   ngOnInit(): void { }
@@ -22,4 +24,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
 
+  onLogout() {
+    this.fireService.logout();
+    this.router.navigate(['user', 'sign-in']);
+  }
 }

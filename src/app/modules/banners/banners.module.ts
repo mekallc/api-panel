@@ -9,12 +9,10 @@ import { ViewComponent } from './view/view.component';
 import { BannersComponent } from './banners.component';
 import { ActionComponent } from './action/action.component';
 import { DatatableModule } from '@core/widgets/datatable/datatable.module';
+import { CustomFormlyModule } from '@core/formly/custom-formly.module';
 
 const app: Routes = [
-  // { path: '', component: BannersComponent },
-  { path: 'view/:uid', component: ViewComponent },
-  { path: '', component: ActionComponent },
-  { path: 'update/:uid', component: ActionComponent },
+  { path: '', component: BannersComponent },
 ];
 
 @NgModule({
@@ -27,6 +25,7 @@ const app: Routes = [
     CommonModule,
     DatatableModule,
     GoogleMapsModule,
+    CustomFormlyModule,
     ReactiveFormsModule,
     FormlyModule.forChild(),
     RouterModule.forChild(app),

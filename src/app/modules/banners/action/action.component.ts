@@ -32,7 +32,7 @@ export class ActionComponent implements OnInit {
   radius = 1000;
   mapLoaded!: Observable<boolean>;
   markerOptions: google.maps.MarkerOptions = { draggable: true };
-  options: google.maps.MapOptions = { center: {lat: 40, lng: -20}, zoom: 13 };
+  options: google.maps.MapOptions = { center: {lat: 40, lng: -20}, zoom: 12 };
 
 
   constructor(
@@ -85,14 +85,11 @@ export class ActionComponent implements OnInit {
   setOnAddress(ev: any) {
     const lat = ev.latLng.lat();
     const lng = ev.latLng.lng();
-    this.display = { lat, lng };
-    this.marker = { lat, lng };
-    this.fields[3].props = {
-      change: (field: any, $event: any) => {
-        console.log(field);
-        console.log($event);
-        return ''
-      }
+    if (lat && lng) {
+      this.display = { lat, lng };
+      this.marker = { lat, lng };
+      this.fields[3].formControl?.setValue(lat);
+      this.fields[4].formControl?.setValue(lng);
     }
   }
 
@@ -109,7 +106,10 @@ export class ActionComponent implements OnInit {
     }
     this.fields[2].hooks = {
       onInit: (field: any) => field.formControl.valueChanges
-      .pipe(tap((value: any) => this.activeListCompanies = value))
+      .pipe(tap((value: any) => {
+        this.activeListCompanies = value;
+        console.log(value);
+      }))
     }
   }
 
