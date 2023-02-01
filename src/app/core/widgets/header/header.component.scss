@@ -1,3 +1,19 @@
 header {
   margin-bottom: 2rem;
 }
+
+.pointer {
+  cursor: pointer;
+}
+
+.nav-item {
+  padding: 0 .5rem;
+  padding-bottom: 2px;
+  &:hover {
+    padding-bottom: 0px;
+    border-bottom: 2px solid rgb(245, 205, 44);
+    a {
+      color: rgb(181, 151, 32);
+    }
+  }
+}

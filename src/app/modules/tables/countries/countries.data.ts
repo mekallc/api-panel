@@ -15,8 +15,8 @@ export const CountriesFormlyJson: FormlyFieldConfig[] = [
     key: 'name',
     type: 'input',
     templateOptions: {
-      label: 'Name',
-      placeholder: 'Name the country',
+      label: 'Pais',
+      placeholder: 'Nombre del país',
       required: true,
     }
   },
@@ -25,7 +25,7 @@ export const CountriesFormlyJson: FormlyFieldConfig[] = [
     type: 'input',
     templateOptions: {
       label: 'ISO2',
-      placeholder: 'Name the country',
+      placeholder: '',
       required: true,
       maxLength: 2
     },
@@ -35,7 +35,6 @@ export const CountriesFormlyJson: FormlyFieldConfig[] = [
     type: 'input',
     templateOptions: {
       label: 'ISO3',
-      placeholder: 'Name the country',
       required: true,
       maxLength: 3
     },
@@ -44,8 +43,8 @@ export const CountriesFormlyJson: FormlyFieldConfig[] = [
     key: 'phone_code',
     type: 'input',
     templateOptions: {
-      label: 'Code Phone',
-      placeholder: 'Code the phone',
+      label: 'Codigo Tetéfono',
+      placeholder: '',
       required: true,
       maxLength: 4
     },
@@ -55,7 +54,7 @@ export const CountriesFormlyJson: FormlyFieldConfig[] = [
     type: 'number',
     hide: false,
     templateOptions: {
-      label: 'Distance media'
+      label: 'Distancia media'
     }
   },
   {
@@ -69,6 +68,8 @@ export const CountriesFormlyJson: FormlyFieldConfig[] = [
 ];
 
 export const CountriesTableJson = {
-  title: ['Name', 'ISO2', 'ISO3', 'Codigo Telefone', 'Distance'],
+  title: ['País', 'ISO2', 'ISO3', 'Codigo Telefone', 'Distancia'],
   data: ['name', 'iso2', 'iso3', 'phone_code', 'distance']
 }
+
+export const Title = 'Paises Activos';

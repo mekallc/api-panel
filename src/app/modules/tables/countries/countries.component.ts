@@ -4,7 +4,7 @@ import { ConnectService } from '@core/services/connect.service';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { CountriesFormlyJson, CountriesTableJson } from './countries.data';
+import { CountriesFormlyJson, CountriesTableJson, Title } from './countries.data';
 
 @Component({
   selector: 'app-countries',
@@ -12,6 +12,7 @@ import { CountriesFormlyJson, CountriesTableJson } from './countries.data';
   styleUrls: ['./countries.component.scss']
 })
 export class CountriesComponent implements OnInit {
+  title = Title;
   table: any;
   model = {};
   uid!: string;

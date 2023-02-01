@@ -14,5 +14,6 @@ export const MenuDataJson = [
 
   { name: 'Servicios', url: 'services' },
   { name: 'Chat Soporte', url: 'soporte' },
+  { name: 'Notificaciones', url: '' },
 ]
 

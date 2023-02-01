@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { ConnectService } from '@core/services/connect.service';
 import { BrandsFormlyJson, BrandsTableJson } from './brands.data';
+import { UtilsService } from '@core/services/utils.service';
 
 @Component({
   selector: 'app-brands',
@@ -18,10 +19,11 @@ export class BrandsComponent implements OnInit {
   fields: FormlyFieldConfig[] = BrandsFormlyJson;
   dtOptions: DataTables.Settings = {};
 
-  countries$!: Observable<any[]>;
+  items$!: Observable<any[]>;
 
   constructor(
-    private connService: ConnectService,
+    private conn: ConnectService,
+    private uService: UtilsService,
   ) {}
 
   ngOnInit(): void {
@@ -33,25 +35,64 @@ export class BrandsComponent implements OnInit {
       pagingType: 'full_numbers'
     }
     this.table = BrandsTableJson;
-    this.countries$ = this.connService.getData('tables/brands');
+    this.items$ = this.conn.getData('tables/brands');
   }
 
   onSubmit() {
     if (this.form.valid) {
-      console.log(this.form.value);
+      const value: any = this.form.value;
+      if (value._id) {
+        this.save(this.form.value);
+      } else {
+        this.add(this.form.value);
+      }
     }
   }
 
   onView(ev: any) {
     console.log(ev);
   }
+
   onEdit(ev: any) {
     this.form.reset();
-    console.log(ev);
-    this.form.setValue(ev);
+    this.form.patchValue({
+      _id: ev._id,
+      name: ev.name,
+      vehicles: ev.vehicles,
+      status: ev.status,
+    });
   }
   onTrash(ev: any) {
     console.log(ev);
+  }
+
+  private add(item: any) {
+    const data = {
+      name: item.name,
+      vehicles: item.vehicles,
+      status: item.status,
+      brandId: item.brand,
+    }
+    this.conn.postData('tables/brands', data)
+    .subscribe((res: any) => {
+      this.uService.setToast('success', 'Se creo de forma exitosa!', 'Exito!');
+      this.items$ = this.conn.getData('tables/brands');
+    })
+
+  }
+  private save(item: any) {
+    const data = {
+      name: item.name,
+      status: item.status,
+      brandId: item.brand,
+      vehicles: item.vehicles,
+    }
+    this.conn.patchData(`tables/brands/${item._id}`, data)
+    .subscribe((res: any) => {
+      console.log('UPDATE', res);
+      this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
+      this.items$ = this.conn.getData('tables/brands');
+    })
   }
 
 }

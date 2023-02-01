@@ -5,7 +5,7 @@ export const ModelsFormlyJson: FormlyFieldConfig[] = [
     key: 'name',
     type: 'input',
     templateOptions: {
-      label: 'Name',
+      label: 'Nombre',
       placeholder: 'Name Brand',
       required: true,
     }
@@ -14,7 +14,7 @@ export const ModelsFormlyJson: FormlyFieldConfig[] = [
     key: 'brand',
     type: 'select',
     templateOptions: {
-      label: "Brand",
+      label: "Marca",
       options: [],
       valueProp: "_id",
       labelProp: "name",
@@ -40,7 +40,7 @@ export const ModelsFormlyJson: FormlyFieldConfig[] = [
 ];
 
 export const ModelsTableJson = {
-  title: ['Brand', 'Model'],
+  title: ['Marca', 'Modelo'],
   data: ['brandId.name', 'name']
 }
 
@@ -49,3 +49,5 @@ export interface IModel {
   name: string;
   brand: string[];
 }
+
+export const Title = 'Modelos';

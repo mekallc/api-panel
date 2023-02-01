@@ -40,6 +40,9 @@ import { DatepickerTypeComponent } from './datepicker.component';
           wrappers: ['form-field']
         },
       ],
+      validationMessages: [
+        { name: 'required', message: 'Campo Obligatorio' },
+      ]
     }),
   ],
 })

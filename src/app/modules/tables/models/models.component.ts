@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ConnectService } from '@core/services/connect.service';
 import { UtilsService } from '@core/services/utils.service';
-import { ModelsFormlyJson, ModelsTableJson } from '@module/tables/models/models.data';
+import { ModelsFormlyJson, ModelsTableJson, Title } from '@module/tables/models/models.data';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -16,7 +16,7 @@ export class ModelsComponent implements OnInit {
   form = new FormGroup({});
   fields: any[] = ModelsFormlyJson;
   dtOptions: DataTables.Settings = {};
-
+  title = Title;
   brand: any = [];
   models$!: Observable<any[]>;
 

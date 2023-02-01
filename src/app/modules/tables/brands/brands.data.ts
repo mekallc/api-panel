@@ -5,18 +5,28 @@ export const BrandsFormlyJson: FormlyFieldConfig[] = [
     key: 'name',
     type: 'input',
     templateOptions: {
-      label: 'Name',
+      label: 'Nombre',
       placeholder: 'Name Brand',
       required: true,
     }
   },
   {
-    key: 'type',
-    type: 'checkbox',
+    key: 'vehicles',
+    type: 'select',
     templateOptions: {
-      label: 'Type Vehicles',
-      placeholder: 'Name Brand',
+      label: 'Tipo de Vehículo',
       required: true,
+      multiple: true,
+      options: [
+        {
+          label: 'Carro',
+          value: '63271a349ca46e0006010703'
+        },
+        {
+          label: 'Motocicleta',
+          value: '63271a349ca46e0006010704'
+        }
+      ]
     }
   },
   {
@@ -24,7 +34,7 @@ export const BrandsFormlyJson: FormlyFieldConfig[] = [
     type: 'checkbox',
     defaultValue: true,
     templateOptions: {
-      label: 'Status'
+      label: 'Status',
     }
   },
   {
@@ -38,6 +48,6 @@ export const BrandsFormlyJson: FormlyFieldConfig[] = [
 ];
 
 export const BrandsTableJson = {
-  title: ['Name', 'Vehicles'],
-  data: ['name', 'type']
+  title: ['Nombre', 'Tipo Vehiculo'],
+  data: ['name', 'vehicles']
 }
