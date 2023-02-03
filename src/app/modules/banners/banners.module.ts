@@ -10,9 +10,13 @@ import { BannersComponent } from './banners.component';
 import { ActionComponent } from './action/action.component';
 import { DatatableModule } from '@core/widgets/datatable/datatable.module';
 import { CustomFormlyModule } from '@core/formly/custom-formly.module';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const app: Routes = [
   { path: '', component: BannersComponent },
+  { path: 'create', component: ActionComponent },
+  { path: 'view/:uid', component: ViewComponent },
 ];
 
 @NgModule({
@@ -25,10 +29,17 @@ const app: Routes = [
     CommonModule,
     DatatableModule,
     GoogleMapsModule,
+    FontAwesomeModule,
     CustomFormlyModule,
     ReactiveFormsModule,
     FormlyModule.forChild(),
     RouterModule.forChild(app),
   ]
 })
-export class BannersModule { }
+export class BannersModule {
+  constructor(library: FaIconLibrary) {
+    library.addIcons(
+      faPlus
+    );
+  }
+}

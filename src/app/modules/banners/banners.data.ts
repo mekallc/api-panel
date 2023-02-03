@@ -93,7 +93,14 @@ export const BannersFormlyJson: FormlyFieldConfig[] = [
   },
 ];
 
-export const BannersTableJson = {
+export const CompanyTableJson = {
   title: ['Company', 'Name', 'URL'],
   data: ['typeCompany.name', 'name', '_id']
 }
+
+export const BannersTableJson = {
+  title: ['Nombre', 'Tipo Usuário', 'Inicio', 'Fin', 'image'],
+  data: ['name', 'type', 'start', 'end', 'picture']
+}
+
+export const Title = 'Banners';

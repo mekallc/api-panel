@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { map, Observable, take, tap } from 'rxjs';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FormGroup } from '@angular/forms';
-import { BannersFormlyJson, BannersTableJson } from './../banners.data';
+import { BannersFormlyJson, CompanyTableJson } from './../banners.data';
 import { GoogleMapsService } from '@core/services/google-maps.service';
 import { ConnectService } from '@core/services/connect.service';
 
@@ -15,7 +15,6 @@ declare let google: any;
   styleUrls: ['./action.component.scss']
 })
 export class ActionComponent implements OnInit {
-
   marker: any;
   display: any;
   position: any;
@@ -66,7 +65,7 @@ export class ActionComponent implements OnInit {
 
   getData() {
     this.dtOptions = { pagingType: 'full_numbers' };
-    this.table = BannersTableJson;
+    this.table = CompanyTableJson;
     this.items$ = this.connService.getData('companies');
   }
   getCurrentLocation() {
