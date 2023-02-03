@@ -8,6 +8,7 @@ import { provideFirestore, getFirestore } from "@angular/fire/firestore";
 import { LANGUAGE_CODE, PERSISTENCE, SETTINGS as AUTH_SETTINGS } from '@angular/fire/compat/auth';
 
 import { environment } from "src/environments/environment";
+import { getStorage, provideStorage } from "@angular/fire/storage";
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { environment } from "src/environments/environment";
     AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
+    provideStorage(() => getStorage()),
     provideFirestore(() => getFirestore()),
     AngularFireAuthModule,
   ],

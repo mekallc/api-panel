@@ -5,7 +5,7 @@ import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
   selector: 'formly-field-file',
   template: `
     <div class="mb-3">
-      <input class="form-control"  type="file" [formControl]="formControl" [formlyAttributes]="field">
+      <input class="form-control" type="file" [formControl]="formControl" [formlyAttributes]="field">
     </div>
   `,
 })

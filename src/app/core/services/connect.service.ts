@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -18,6 +18,15 @@ export class ConnectService {
   postData(query: string, data: any): Observable<any> {
     return this.http.post<any>(`${url}/${query}`, data);
   }
+
+  postFormData(query: string, data: any): Observable<any> {
+    return this.http.post<any>(`${url}/${query}`, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data'
+      })
+    });
+  }
+
   patchData(query: string, data: any): Observable<any> {
     return this.http.patch<any>(`${url}/${query}`, data);
   }

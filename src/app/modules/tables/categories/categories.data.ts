@@ -12,6 +12,7 @@ export const CategoriesFormlyJson: FormlyFieldConfig[] = [
   {
     key: 'name',
     type: 'input',
+    defaultValue: 'Ayuda',
     templateOptions: {
       label: 'Nombre',
       placeholder: '',
@@ -19,7 +20,7 @@ export const CategoriesFormlyJson: FormlyFieldConfig[] = [
     }
   },
   {
-    key: 'file',
+    key: 'picture',
     type: 'file',
     templateOptions: {
       label: 'Ícono',

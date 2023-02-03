@@ -7,13 +7,13 @@
         [options]="dtOptions"
         [actions]="['edit', 'trash']"
         [data]="(items$ | async)"
-        (setEdit)="onEdit($event)"
+        (setEdit)="setEdit($event)"
         (setTrash)="onTrash($event)"
       ></app-datatable>
     </div>
     <div class="col-lg-4 col-xl-3">
       <div id="form">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="form" enctype="multipart/form-data" (ngSubmit)="onSubmit()">
           <formly-form
             [form]="form"
             [model]="model"

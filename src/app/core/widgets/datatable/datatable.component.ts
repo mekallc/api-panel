@@ -80,10 +80,10 @@ export class DatatableComponent implements OnInit {
   }
 
   private setBooleanImage(item: string) {
-    const value = item.split('.').pop();
-    if (value === 'svg' || value === 'png' || value === 'jpg') {
-      return true;
-    }
+    if (item.includes('jpg')) return true;
+    if (item.includes('jpeg')) return true;
+    if (item.includes('png')) return true;
+    if (item.includes('svg')) return true;
     return false;
   }
 }

@@ -3,7 +3,7 @@ import * as fs from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { map, Observable, switchMap } from 'rxjs';
-
+import { Storage, ref, deleteObject, uploadBytes, uploadString, uploadBytesResumable, percentage, getDownloadURL } from '@angular/fire/storage';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +12,7 @@ export class FireService {
   constructor(
     private fireStore: Firestore,
     private auth: AngularFireAuth,
+    private storage: Storage,
   ) { }
 
   getChatByService(uid: string) {
@@ -72,4 +73,21 @@ export class FireService {
   async logout() {
     this.auth.signOut();
   }
+
+  async upload (folder: string, file: any | null): Promise<string | undefined> {
+    let url: string | undefined;
+    const extName = file.name.split('.');
+    const currenName = Date.now() + '.' + extName.pop();
+    const path = `${folder}/${ currenName }`;
+    if (file) {
+      try {
+        const storageRef = ref(this.storage, path);
+        await uploadBytesResumable(storageRef, file);
+        url = await getDownloadURL(storageRef);
+      } catch(e: any) {
+        console.error(e);
+      }
+    }
+    return url;
+  };
 }
