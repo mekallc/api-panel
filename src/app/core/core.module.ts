@@ -16,8 +16,8 @@ import { ToastrModule } from 'ngx-toastr';
     DataTablesModule,
     HttpClientModule,
     FontAwesomeModule,
-    ReactiveFormsModule,
     CustomFormlyModule,
+    ReactiveFormsModule,
     HttpClientJsonpModule,
     ToastrModule.forRoot(),
   ]

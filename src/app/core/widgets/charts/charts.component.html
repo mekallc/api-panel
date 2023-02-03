@@ -1,0 +1,14 @@
+<ng-container>
+  <google-chart style="width: 100%;"
+  [title]="title"
+  [type]="type"
+  [data]="data"
+  [columns]="columns"
+  [options]="options"
+  [width]="width"
+  [height]="height"
+  (ready)="onReady($event)"
+  (error)="onError($event)"
+  (select)="onSelect($event)"
+  ></google-chart>
+</ng-container>
