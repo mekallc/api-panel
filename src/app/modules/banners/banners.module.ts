@@ -12,10 +12,12 @@ import { DatatableModule } from '@core/widgets/datatable/datatable.module';
 import { CustomFormlyModule } from '@core/formly/custom-formly.module';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 
 const app: Routes = [
   { path: '', component: BannersComponent },
   { path: 'create', component: ActionComponent },
+  { path: 'edit/:uid', component: ActionComponent },
   { path: 'view/:uid', component: ViewComponent },
 ];
 
@@ -30,6 +32,7 @@ const app: Routes = [
     DatatableModule,
     GoogleMapsModule,
     FontAwesomeModule,
+    NgbAccordionModule,
     CustomFormlyModule,
     ReactiveFormsModule,
     FormlyModule.forChild(),

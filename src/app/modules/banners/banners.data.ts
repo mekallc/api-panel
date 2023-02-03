@@ -7,6 +7,25 @@ export function toDateParser(date: Date, index: number) {
 
 export const BannersFormlyJson: FormlyFieldConfig[] = [
   {
+    key: 'type',
+    type: 'select',
+    templateOptions: {
+      label: 'Visualizar',
+      required: true,
+      multiple: true,
+      options: [
+        {
+          label: 'Cliente',
+          value: 0
+        },
+        {
+          label: 'LT',
+          value: 1
+        }
+      ]
+    }
+  },
+  {
     key: 'name',
     type: 'input',
     templateOptions: {
@@ -69,13 +88,6 @@ export const BannersFormlyJson: FormlyFieldConfig[] = [
     }
   },
   {
-    key: 'init_date',
-    type: 'date',
-    templateOptions: {
-      label: 'Init Date'
-    }
-  },
-  {
     key: 'start_date',
     type: 'datepicker',
     templateOptions: {
@@ -90,6 +102,14 @@ export const BannersFormlyJson: FormlyFieldConfig[] = [
       required: true,
       label: 'End date'
     },
+  },
+  {
+    key: '_id',
+    type: 'hide',
+    hide: false,
+    templateOptions: {
+      label: 'ID'
+    }
   },
 ];
 

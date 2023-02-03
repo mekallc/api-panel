@@ -4,32 +4,53 @@
   </h2>
   <div class="row justify-content-center">
     <div class="col-lg-8">
-      <div id="map" *ngIf="mapLoaded | async">
-        <google-map height="550px" width="100%" [options]="options">
-          <map-marker [position]="marker"
-            [options]="markerOptions" (mapDragend)="setOnAddress($event)">
-          <map-circle [center]="marker" [radius]="radius"></map-circle>
-        </map-marker>
-        </google-map>
-        <ng-container *ngIf="display">
-          <p class="mt-1 text-center">
-            (Lat,Lng): ({{display.lat.toFixed(7)}}, {{ display.lng.toFixed(7)}})
-          </p>
+      <ngb-accordion #acc [activeIds]="activeListCompanies ? 'static-3' : ''">
+        <ng-container *ngIf="image">
+          <ngb-panel title="Imagen">
+            <ng-template ngbPanelContent>
+              <img [src]="image" class="img-fluid mb-4 border" alt="image">
+            </ng-template>
+          </ngb-panel>
         </ng-container>
-      </div>
-      <ng-container *ngIf="activeListCompanies">
-        <div id="companies">
-          <app-datatable
-            [id]="false"
-            [table]="table"
-            [options]="dtOptions"
-            [actions]="[]"
-            [data]="(items$ | async)"
-            [status]="false">
-          </app-datatable>
-        </div>
-      </ng-container>
-
+        <ngb-panel title="Mapa">
+          <ng-template ngbPanelContent>
+            <ng-container *ngIf="mapLoaded | async"; else notFound>
+              <div id="map" >
+                <google-map height="550px" width="100%" [options]="options">
+                  <map-marker [position]="marker"
+                    [options]="markerOptions" (mapDragend)="setOnAddress($event)">
+                  <map-circle [center]="marker" [radius]="radius"></map-circle>
+                </map-marker>
+                </google-map>
+                <ng-container *ngIf="display">
+                  <p class="mt-1 text-center">
+                    (Lat,Lng): ({{display.lat.toFixed(7)}}, {{ display.lng.toFixed(7)}})
+                  </p>
+                </ng-container>
+              </div>
+            </ng-container>
+            <ng-template #notFound>
+              <div style="height: 300px">
+                <h3>Loading...</h3>
+              </div>
+            </ng-template>
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel id="static-3" title="URL Interno" [disabled]="!activeListCompanies">
+          <ng-template ngbPanelContent>
+            <div id="companies">
+              <app-datatable
+                [id]="false"
+                [table]="table"
+                [options]="dtOptions"
+                [actions]="[]"
+                [data]="(items$ | async)"
+                [status]="false">
+              </app-datatable>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
     </div>
     <div class="col-lg-4">
       <div id="form">
