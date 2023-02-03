@@ -6,6 +6,7 @@ import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FireService } from '@core/services/fire.service';
 import { ConnectService } from '@core/services/connect.service';
 import { CategoriesFormlyJson, CategoriesTableJson, Title } from './categories.data';
+import { UtilsService } from '@core/services/utils.service';
 
 @Component({
   selector: 'app-categories',
@@ -26,11 +27,11 @@ export class CategoriesComponent implements OnInit {
   constructor(
     private conn: ConnectService,
     private fireService: FireService,
+    private uService: UtilsService,
   ) {}
 
   ngOnInit(): void {
     this.getData();
-    this.setFormlyHook();
   }
 
   getData() {
@@ -57,9 +58,9 @@ export class CategoriesComponent implements OnInit {
     const upload: any = await this.fireService.upload('admin', value.picture[0]);
     if(upload) {
       value.picture = upload ? upload: '';
-      console.log(value);
       this.conn.postData('tables/categories', value)
-      .subscribe((res: any) => {
+      .subscribe(() => {
+        this.uService.setToast('success', 'Se creo de forma exitosa!', 'Exito!');
         this.items$ = this.conn.getData('tables/categories');
       })
     }
@@ -71,9 +72,9 @@ export class CategoriesComponent implements OnInit {
     if(upload) {
       delete value._id;
       value.picture = upload ? upload: '';
-      console.log(value);
       this.conn.patchData(`tables/categories/${id}`, value)
-      .subscribe((res: any) => {
+      .subscribe(() => {
+        this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
         this.items$ = this.conn.getData(`tables/categories`);
       })
     }
@@ -86,20 +87,8 @@ export class CategoriesComponent implements OnInit {
   onTrash(ev: any) {
     this.conn.deleteData(`tables/categories/${ev._id}`)
     .subscribe(() => {
+      this.uService.setToast('danger', 'Se elimino de forma exitosa!', 'Exito!');
       this.items$ = this.conn.getData(`tables/categories`);
     })
-  }
-
-  private setFormlyHook() {
-    this.fields[2].hooks = {
-      onInit: (field: any) => field.formControl.valueChanges
-      .pipe(tap((value: any) => {
-        this.updateFile(value);
-        console.log(value);
-      }))
-    }
-  }
-
-  private updateFile(event: FileList){
   }
 }

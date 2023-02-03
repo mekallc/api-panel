@@ -50,23 +50,19 @@ export class CountriesComponent implements OnInit {
   }
 
   create(data: any) {
-    this.connService.postData('tables/countries', data).subscribe(
-      (res: any) => {
-        this.toastr.show(
-          'Se agrego correctamente el registro',
-          'Show!'
-        );
+    this.connService.postData('tables/countries', data)
+    .subscribe(() => {
+        this.toastr.show('Se agrego correctamente el registro', 'Show!');
+        this.countries$ = this.connService.getData('tables/countries');
       }
     )
   }
 
   update(uid: string, data: any) {
-    this.connService.patchData(`tables/countries/${uid}`, data).subscribe(
-      (res: any) => {
-        this.toastr.show(
-          `Se Actualizo el item com ID: ${uid}`,
-          'Se actualizo!'
-        );
+    this.connService.patchData(`tables/countries/${uid}`, data)
+    .subscribe(() => {
+        this.toastr.show( `Se Actualizo el item com ID: ${uid}`, 'Se actualizo!');
+        this.countries$ = this.connService.getData('tables/countries');
       }
     )
   }
@@ -83,14 +79,10 @@ export class CountriesComponent implements OnInit {
   onTrash(ev: any) {
     const id = ev._id;
     this.connService.patchData(`tables/countries/${id}`, { status: false })
-    .subscribe(
-      () => {
-        this.toastr.info(
-          `Se desabilito el país ${ev.name}`,
-          'Cuidado!'
-        );
+    .subscribe(() => {
+        this.toastr.info(`Se desabilito el país ${ev.name}`, 'Cuidado!');
+        this.countries$ = this.connService.getData('tables/countries');
       }
     )
-    this.countries$ = this.connService.getData('tables/countries');
   }
 }

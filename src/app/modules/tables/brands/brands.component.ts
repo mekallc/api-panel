@@ -62,8 +62,13 @@ export class BrandsComponent implements OnInit {
       status: ev.status,
     });
   }
+
   onTrash(ev: any) {
-    console.log(ev);
+    this.conn.deleteData(`tables/brands/${ev._id}`)
+    .subscribe(() => {
+      this.uService.setToast('danger', 'Se elimino de forma exitosa!', 'Exito!');
+      this.items$ = this.conn.getData(`tables/brands`);
+    })
   }
 
   private add(item: any) {
@@ -74,7 +79,7 @@ export class BrandsComponent implements OnInit {
       brandId: item.brand,
     }
     this.conn.postData('tables/brands', data)
-    .subscribe((res: any) => {
+    .subscribe(() => {
       this.uService.setToast('success', 'Se creo de forma exitosa!', 'Exito!');
       this.items$ = this.conn.getData('tables/brands');
     })
@@ -88,8 +93,7 @@ export class BrandsComponent implements OnInit {
       vehicles: item.vehicles,
     }
     this.conn.patchData(`tables/brands/${item._id}`, data)
-    .subscribe((res: any) => {
-      console.log('UPDATE', res);
+    .subscribe(() => {
       this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
       this.items$ = this.conn.getData('tables/brands');
     })

@@ -78,11 +78,11 @@ export class ModelsComponent implements OnInit {
             icon: 'success',
             title: 'Eliminado!',
             text: 'Tu modelo fue eliminado.',
-          })
+          });
+          this.models$ = this.ms.getData('tables/models');
         })
       }
     });
-    this.models$ = this.ms.getData('tables/models');
   }
 
   private add(item: any) {
@@ -92,10 +92,10 @@ export class ModelsComponent implements OnInit {
       brandId: item.brand
     }
     this.ms.postData('tables/models', data)
-    .subscribe((res: any) => {
+    .subscribe(() => {
       this.uService.setToast('success', 'Se creo de forma exitosa!', 'Exito!');
+      this.models$ = this.ms.getData('tables/models');
     })
-    this.models$ = this.ms.getData('tables/models');
 
   }
   private save(item: any) {
@@ -105,9 +105,9 @@ export class ModelsComponent implements OnInit {
       brandId: item.brand,
     }
     this.ms.patchData(`tables/models/${item._id}`, data)
-    .subscribe((res: any) => {
+    .subscribe(() => {
       this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
+      this.models$ = this.ms.getData('tables/models');
     })
-    this.models$ = this.ms.getData('tables/models');
   }
 }
