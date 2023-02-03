@@ -8,12 +8,15 @@ export const MenuDataJson = [
       { name: 'Modelo', url: 'tables/models' },
     ]
   },
+  { name: 'Solicitudes', url: 'services' },
   { name: 'Compañias', url: 'companies' },
   { name: 'Clientes', url: 'customers' },
-  { name: 'Banner', url: 'banners' },
-
-  { name: 'Servicios', url: 'services' },
-  { name: 'Chat Soporte', url: 'soporte' },
-  { name: 'Notificaciones', url: '' },
+  { name: 'Servicios', url: '',
+  children: [
+    { name: 'Banner', url: 'banners' },
+    { name: 'Chat Soporte', url: 'soporte' },
+    { name: 'Notificaciones', url: '' },
+  ]
+},
 ]
 

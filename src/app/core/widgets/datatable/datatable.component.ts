@@ -58,6 +58,12 @@ export class DatatableComponent implements OnInit {
     if (data.includes('_id') && this.id) {
       return item[data].slice(0, 7);
     }
+    if (typeof(item[data]) === 'object') {
+      return this.setObject(item[data]);
+    }
+    if (typeof(item[data]) === 'undefined') {
+      return '';
+    }
     return this.setImage(item[data]);
   }
 
@@ -85,6 +91,15 @@ export class DatatableComponent implements OnInit {
     if (item.includes('png')) return true;
     if (item.includes('svg')) return true;
     return false;
+  }
+
+  private setObject(data: any) {
+    const html: string[] = [];
+    for (const key in data) {
+      const newValue = +key === 0 ? ' Cliente' : ' LT';
+      html.push(newValue);
+    }
+    return html;
   }
 }
 
