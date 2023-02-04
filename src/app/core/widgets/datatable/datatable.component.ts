@@ -1,11 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UnitConvertedPipe } from '@core/pipe/unit-converted.pipe';
 
 @Component({
   selector: 'app-datatable',
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.scss'],
-  providers: [DatePipe]
+  providers: [DatePipe, UnitConvertedPipe]
 })
 export class DatatableComponent implements OnInit {
   @Input() id = true;
@@ -17,12 +18,14 @@ export class DatatableComponent implements OnInit {
 
   @Output() setView = new EventEmitter<object>();
   @Output() setEdit = new EventEmitter<object>();
+  @Output() setClick = new EventEmitter<object>();
   @Output() setTrash = new EventEmitter<object>();
 
   dtOptions: DataTables.Settings = { };
 
   constructor(
     private dp: DatePipe,
+    private up: UnitConvertedPipe,
   ) {}
 
   ngOnInit(): void {
@@ -39,41 +42,8 @@ export class DatatableComponent implements OnInit {
   onTrash(item: any) {
     this.setTrash.emit(item);
   }
-
-  validate(search: string) {
-    const value = this.actions.indexOf(search);
-    if (value < 0) {
-      return false;
-    }
-    return true;
-  }
-  parseData(item: any, data: string) {
-    if (data.includes('.')) {
-      const column = data.split('.');
-      return this.setImage(item[column[0]][column[1]]);
-    }
-    if (data.includes('createdAt')) {
-      return this.dp.transform(item[data], 'dd-MM-yyyy | HH:mm', 'es-ES');
-    }
-    if (data.includes('_id') && this.id) {
-      return item[data].slice(0, 7);
-    }
-    if (typeof(item[data]) === 'object') {
-      return this.setObject(item[data]);
-    }
-    if (typeof(item[data]) === 'undefined') {
-      return '';
-    }
-    return this.setImage(item[data]);
-  }
-
-  setImage(item: any){
-    if (item.includes('.')) {
-      return this.setBooleanImage(item) ?
-        `<img src="${item}" height="30px" class="mx-auto d-block" />` :
-        item;
-    }
-    return item;
+  onClick(item: any) {
+    this.setClick.emit(item);
   }
 
   disableStatus() {
@@ -85,11 +55,94 @@ export class DatatableComponent implements OnInit {
     }
   }
 
-  private setBooleanImage(item: string) {
-    if (item.includes('jpg')) return true;
-    if (item.includes('jpeg')) return true;
-    if (item.includes('png')) return true;
-    if (item.includes('svg')) return true;
+  validate(search: string) {
+    const value = this.actions.indexOf(search);
+    if (value < 0) {
+      return false;
+    }
+    return true;
+  }
+  parseData(item: any, data: string) {
+    if (data.includes('.')) {
+      return this.dataWithArray(item, data);
+    }
+    return this.dataWitOutArray(item, data);
+  }
+
+  private dataWitOutArray(item: any, data: string) {
+    if (this.existImage(data)) {
+      return this.setImage(item[data]);
+    }
+    else if (typeof(item[data]) === 'object') {
+      return this.setObject(item[data]);
+    }
+    else if (this.existDate(data)) {
+      return this.setDate(item[data]);
+    }
+    else if (data.includes('distance')) {
+      return this.setDistance(item[data])
+    }
+    else if(data.includes('_id')) {
+      return this.setSlice(item[data], 7);
+    }
+    return this.setUndefined(item[data]);
+  }
+
+  private dataWithArray(item: any, data: string) {
+    const column = data.split('.');
+    const newData = item[column[0]][column[1]];
+    if (this.existImage(data)) {
+      return this.setImage(item[data]);
+    }
+    else if (typeof(item[data]) === 'object') {
+      return this.setObject(item[data]);
+    }
+    else if (data.includes('distance')) {
+      return this.setDistance(newData)
+    }
+    else if (this.existDate(data)) {
+      return this.setDate(newData)
+    }
+    else if(data.includes('_id')) {
+      return this.setSlice(newData, 7);
+    }
+    return this.setUndefined(newData);
+  }
+
+  private setSlice(item: string, position: number) {
+    return item.slice(0, position);
+  }
+  private setUndefined(item: string) {
+    return (typeof(item) === 'undefined') ? '': item;
+  }
+
+  private setImage(item: string){
+    return `<img src="${item}" height="30px" class="mx-auto d-block" />`;
+  }
+
+  private setDate(item: string){
+    return this.dp.transform(item, 'dd-MM-yyyy | HH:mm', 'es-ES');
+  }
+
+  private setDistance(item: number) {
+    return this.up.transform(item);
+  }
+
+  private existImage(item: string) {
+    if (item.includes('icon')) return true;
+    if (item.includes('picture')) return true;
+    if (item.includes('image')) return true;
+    return false;
+  }
+
+  private existDate(item: string) {
+    if (item.includes('createdAt')) return true;
+    if (item.includes('updatedAt')) return true;
+    if (item.includes('start')) return true;
+    if (item.includes('end')) return true;
+    if (item.includes('startAt')) return true;
+    if (item.includes('starAt')) return true;
+    if (item.includes('endAt')) return true;
     return false;
   }
 

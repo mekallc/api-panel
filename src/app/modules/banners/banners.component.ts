@@ -32,7 +32,7 @@ export class BannersComponent implements OnInit {
     this.dtOptions = { pagingType: 'full_numbers' };
     this.table = BannersTableJson;
     this.items$ = this.connService.getData('banners');
-    this.items$.subscribe(res => console.log(res));
+    this.items$.subscribe(res => console.log('BANNER', res));
   }
 
   onCreate() {

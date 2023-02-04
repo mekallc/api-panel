@@ -54,7 +54,8 @@ export const CountriesFormlyJson: FormlyFieldConfig[] = [
     type: 'number',
     hide: false,
     templateOptions: {
-      label: 'Distancia media'
+      label: 'Distancia media',
+      placeholder: 'distancia en metros'
     }
   },
   {

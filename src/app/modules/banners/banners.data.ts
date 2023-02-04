@@ -73,22 +73,21 @@ export const BannersFormlyJson: FormlyFieldConfig[] = [
   {
     key: 'distance',
     type: 'number',
-    defaultValue: 1000,
     props: {
-      label: 'Distance in meters',
-      placeholder: '1000',
+      label: 'Radio de acción (metros)',
+      placeholder: 'Distancia en metros',
       required: true,
     },
   },
   {
-    key: 'file',
+    key: 'picture',
     type: 'file',
     templateOptions: {
       label: 'Image'
     }
   },
   {
-    key: 'start_date',
+    key: 'starAt',
     type: 'datepicker',
     templateOptions: {
       required: true,
@@ -96,7 +95,7 @@ export const BannersFormlyJson: FormlyFieldConfig[] = [
     },
   },
   {
-    key: 'end_date',
+    key: 'endAt',
     type: 'datepicker',
     templateOptions: {
       required: true,
@@ -106,7 +105,7 @@ export const BannersFormlyJson: FormlyFieldConfig[] = [
   {
     key: '_id',
     type: 'hide',
-    hide: false,
+    hide: true,
     templateOptions: {
       label: 'ID'
     }
@@ -114,13 +113,13 @@ export const BannersFormlyJson: FormlyFieldConfig[] = [
 ];
 
 export const CompanyTableJson = {
-  title: ['Company', 'Name', 'URL'],
-  data: ['typeCompany.name', 'name', '_id']
+  title: ['Company', 'Name'],
+  data: ['typeCompany.name', 'name']
 }
 
 export const BannersTableJson = {
-  title: ['Nombre', 'Tipo Usuário', 'Inicio', 'Fin', 'image'],
-  data: ['name', 'type', 'start', 'end', 'picture']
+  title: ['Nombre', 'Tipo Usuário', 'Inicio', 'Fin', 'image', 'Distancia'],
+  data: ['name', 'type', 'starAt', 'endAt', 'picture', 'position.distance']
 }
 
 export const Title = 'Banners';

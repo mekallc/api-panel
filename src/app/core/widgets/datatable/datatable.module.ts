@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DatatableComponent } from './datatable.component';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { DataTablesModule } from 'angular-datatables';
-
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faPenToSquare, faEye, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+
+import { PipeModule } from '@core/pipe/pipe.module';
+import { DatatableComponent } from './datatable.component';
 
 @NgModule({
   exports: [ DatatableComponent ],
   declarations: [ DatatableComponent ],
   imports: [
+    PipeModule,
     CommonModule,
     DataTablesModule,
     FontAwesomeModule,
@@ -19,7 +21,7 @@ import { faPenToSquare, faEye, faTrashCan } from '@fortawesome/free-regular-svg-
 export class DatatableModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(
-      faPenToSquare, faEye, faTrashCan, faCircle
+      faPenToSquare, faEye, faTrashCan, faCircle, faCircleCheck
     );
   }
 }

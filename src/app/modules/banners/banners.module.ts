@@ -11,8 +11,9 @@ import { ActionComponent } from './action/action.component';
 import { DatatableModule } from '@core/widgets/datatable/datatable.module';
 import { CustomFormlyModule } from '@core/formly/custom-formly.module';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faCircleChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { MomentModule } from 'ngx-moment';
 
 const app: Routes = [
   { path: '', component: BannersComponent },
@@ -23,12 +24,13 @@ const app: Routes = [
 
 @NgModule({
   declarations: [
-    BannersComponent,
     ViewComponent,
-    ActionComponent
+    ActionComponent,
+    BannersComponent,
   ],
   imports: [
     CommonModule,
+    MomentModule,
     DatatableModule,
     GoogleMapsModule,
     FontAwesomeModule,
@@ -42,7 +44,7 @@ const app: Routes = [
 export class BannersModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(
-      faPlus
+      faPlus, faCircleChevronLeft
     );
   }
 }

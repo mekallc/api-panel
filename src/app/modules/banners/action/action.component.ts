@@ -8,8 +8,8 @@ import { BannersFormlyJson, CompanyTableJson } from './../banners.data';
 import { GoogleMapsService } from '@core/services/google-maps.service';
 import { ConnectService } from '@core/services/connect.service';
 import { FireService } from '@core/services/fire.service';
-
-declare let google: any;
+import { UtilsService } from '@core/services/utils.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-action',
@@ -18,6 +18,7 @@ declare let google: any;
 })
 export class ActionComponent implements OnInit {
   @ViewChild('acc') accordion!: NgbAccordion;
+  title!: string;
   marker: any;
   display: any;
   position: any;
@@ -43,6 +44,7 @@ export class ActionComponent implements OnInit {
     private router: Router,
     private conn: ConnectService,
     activatedRoute: ActivatedRoute,
+    private uService: UtilsService,
     private fireService: FireService,
     private gMapService: GoogleMapsService,
   ) {
@@ -52,15 +54,28 @@ export class ActionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.fields.length);
     this.getData();
     this.setHookFormly();
     this.getCurrentLocation();
-    console.log(this.form);
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    if (this.form.invalid) return;
+    const value: any = this.form.value;
+    const one = `${value.starAt.day}/${value.starAt.month}/${value.starAt.year}`;
+    const two = `${value.endAt.day}/${value.endAt.month}/${value.endAt.year} 23:59`;
+    value.starAt = moment(one, 'DD-MM-YYYY').toDate();
+    value.endAt = moment(two, 'DD-MM-YYYY HH:mm').toDate();
+    value.position = {
+      distance: value.distance,
+      latitude: value.latitude,
+      longitude: value.longitude,
+    };
+    if (this.uid) {
+      this.save(value)
+    } else {
+      this.add(value);
+    }
   }
 
   setCreate() {
@@ -69,13 +84,12 @@ export class ActionComponent implements OnInit {
 
   setEdit(uid: string) {
     this.uid = uid;
+    this.title = 'Banner: Actualizar';
     this.conn.getData(`banners/${uid}`).subscribe((res: any) => {
       this.image = res.picture;
-      console.log(res);
       this.form.patchValue({
         url: res.url,
         name: res.name,
-        file: res.picture,
         latitude: res.position.latitude,
         distance: res.position.distance,
         longitude: res.position.longitude,
@@ -84,7 +98,6 @@ export class ActionComponent implements OnInit {
         type: res.type,
       });
     })
-    console.log(uid);
   }
 
   getData() {
@@ -104,7 +117,10 @@ export class ActionComponent implements OnInit {
     }
   }
 
-
+  onClick(ev: any) {
+    console.log(ev._id);
+    this.form.patchValue({ url: ev._id });
+  }
   setOnAddress(ev: any) {
     const lat = ev.latLng.lat();
     const lng = ev.latLng.lng();
@@ -135,15 +151,47 @@ export class ActionComponent implements OnInit {
     }
   }
 
+  onBack() {
+    this.router.navigate(['pages', 'banners']);
+  }
+
   private setData(uid?: any) {
     if (uid) this.setEdit(uid)
     else this.getVerificatedCreateUrl();
   }
 
   private getVerificatedCreateUrl() {
+    this.title = 'Banner: Crear';
     const route = this.router.url.includes('create');
     if(!route) {
       this.router.navigate(['banners']);
     }
+  }
+
+  private async add(value: any) {
+    value.status = 1;
+    const upload: any = await this.fireService.upload('banners', value.picture[0]);
+    if(upload) {
+      value.picture = upload ? upload: '';
+      this.conn.postData('banners', value)
+      .subscribe((res) => {
+        this.uService.setToast('success', 'Se creo de forma exitosa!', 'Exito!');
+        this.router.navigate(['pages', 'banners']);
+      })
+    }
+  }
+  private async save(value: any) {
+    delete value._id;
+    if (value.file) {
+      const upload: any = await this.fireService.upload('admin', value.picture[0]);
+      if(upload) {
+        value.picture = upload ? upload: '';
+      }
+    }
+    this.conn.patchData(`banners/${this.uid}`, value)
+    .subscribe(() => {
+      this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
+      this.router.navigate(['pages', 'banners']);
+    })
   }
 }

@@ -27,12 +27,11 @@ export class HomeComponent implements OnInit {
         legend: { position: "none" },
       }
     }
-    console.log(this.userSistema);
   }
 
   getUserSistema() {
     this.conn.getData('users').subscribe(res => {
-      console.log(res);
+      console.log('USER ', res);
     })
   }
 }

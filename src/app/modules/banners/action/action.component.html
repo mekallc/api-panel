@@ -1,6 +1,9 @@
-<div class="container">
+<section id="banners actions">
   <h2 class="titulo">
-    Banners
+    {{ title }}
+    <span class="float-right">
+      <fa-icon class="mx-2 cursor text-primary" [icon]="['fas', 'circle-chevron-left']" (click)="onBack()"></fa-icon>
+    </span>
   </h2>
   <div class="row justify-content-center">
     <div class="col-lg-8">
@@ -43,8 +46,9 @@
                 [id]="false"
                 [table]="table"
                 [options]="dtOptions"
-                [actions]="[]"
+                [actions]="['click']"
                 [data]="(items$ | async)"
+                (setClick)="onClick($event)"
                 [status]="false">
               </app-datatable>
             </div>
@@ -76,4 +80,4 @@
       </div>
     </div>
   </div>
-</div>
+</section>

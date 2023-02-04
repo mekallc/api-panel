@@ -8,12 +8,10 @@ header {
 
 .nav-item {
   padding: 0 .3rem;
-  padding-bottom: 2px;
+  padding-bottom: 4px;
   &:hover {
     padding-bottom: 0px;
-    border-bottom: 2px solid rgb(245, 205, 44);
-    a {
-      color: rgb(181, 151, 32);
-    }
+    background-color: rgba(0,0,0,.10);
+    border-bottom: 4px solid rgb(245, 205, 44);
   }
 }
