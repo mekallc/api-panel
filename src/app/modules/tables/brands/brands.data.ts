@@ -40,7 +40,7 @@ export const BrandsFormlyJson: FormlyFieldConfig[] = [
   {
     key: '_id',
     type: 'hide',
-    hide: false,
+    hide: true,
     templateOptions: {
       label: 'ID'
     }

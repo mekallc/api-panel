@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UnitConvertedPipe } from '@core/pipe/unit-converted.pipe';
@@ -25,6 +26,7 @@ export class DatatableComponent implements OnInit {
 
   constructor(
     private dp: DatePipe,
+    private router: Router,
     private up: UnitConvertedPipe,
   ) {}
 
@@ -147,9 +149,12 @@ export class DatatableComponent implements OnInit {
   }
 
   private setObject(data: any) {
+    const url = this.router.url.split('/').pop();
+    const newA = url === 'brands' ? 'Carro' : 'Cliente';
+    const newB = url === 'brands' ? ' Motocicleta' : ' LT';
     const html: string[] = [];
     for (const key in data) {
-      const newValue = +key === 0 ? ' Cliente' : ' LT';
+      const newValue = +key === 0 ? newA : newB;
       html.push(newValue);
     }
     return html;
