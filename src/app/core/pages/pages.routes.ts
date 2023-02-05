@@ -40,6 +40,11 @@ const app: Routes = [
         loadChildren: () =>
           import('@module/soporte/soporte.module').then( m => m.SoporteModule)
       },
+      {
+        path: 'push',
+        loadChildren: () =>
+          import('@module/notifications/notifications.module').then( m => m.NotificationsModule)
+      },
     ],
   },
   { path: '', redirectTo: '/pages/home', pathMatch: 'full' },
