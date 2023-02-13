@@ -149,12 +149,17 @@ export class DatatableComponent implements OnInit {
   }
 
   private setObject(data: any) {
+    let newValue: any;
     const url = this.router.url.split('/').pop();
     const newA = url === 'brands' ? 'Carro' : 'Cliente';
     const newB = url === 'brands' ? ' Motocicleta' : ' LT';
     const html: string[] = [];
     for (const key in data) {
-      const newValue = +key === 0 ? newA : newB;
+      if (url === 'brands') {
+        newValue = data[key] === '63271a349ca46e0006010703' ? newA : newB;
+      } else {
+        newValue = +key === 0 ? newA : newB;
+      }
       html.push(newValue);
     }
     return html;

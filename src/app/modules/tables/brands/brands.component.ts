@@ -55,7 +55,6 @@ export class BrandsComponent implements OnInit {
 
   onEdit(ev: any) {
     this.uid = ev._id;
-    console.log(ev);
     this.form.reset();
     this.form.patchValue({
       _id: ev._id,
