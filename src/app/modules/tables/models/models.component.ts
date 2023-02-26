@@ -63,26 +63,12 @@ export class ModelsComponent implements OnInit {
     });
   }
   onTrash(ev: any) {
-    this.uService.setAlert({
-      title: 'Estas seguro?',
-      text: "Quieres eliminar este modelo!",
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Cancelar',
-      confirmButtonText: 'Si, quiero eliminar!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.ms.deleteData(`tables/models/${this.id}`)
-        .subscribe(() => {
-          this.uService.setAlert({
-            icon: 'success',
-            title: 'Eliminado!',
-            text: 'Tu modelo fue eliminado.',
-          });
-          this.models$ = this.ms.getData('tables/models/list');
-        })
-      }
+    this.ms.deleteData(`tables/models/${ev._id}`).subscribe(() => {
+      this.uService.setToast('success',
+        `${ev.brand_name} ${ev.name} se elimino correctamente!`,
+        'Exito!'
+      );
+      this.models$ = this.ms.getData('tables/models/list');
     });
   }
 
