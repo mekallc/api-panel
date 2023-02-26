@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./models.component.scss']
 })
 export class ModelsComponent implements OnInit {
+  id!: string;
   table: any;
   model = {};
   form = new FormGroup({});
@@ -31,10 +32,11 @@ export class ModelsComponent implements OnInit {
 
   getData() {
     this.dtOptions = {
-      pagingType: 'full_numbers'
+      pageLength: 15,
+      pagingType: 'full_numbers',
     }
     this.table = ModelsTableJson;
-    this.models$ = this.ms.getData('tables/models');
+    this.models$ = this.ms.getData('tables/models/list');
     this.ms.getData('tables/brands').subscribe(res =>
       this.fields[1]['templateOptions'].options = res );
   }
@@ -42,7 +44,7 @@ export class ModelsComponent implements OnInit {
   onSubmit() {
     if (this.form.valid) {
       const value: any = this.form.value;
-      if (value._id) {
+      if (this.id) {
         this.save(this.form.value);
       } else {
         this.add(this.form.value);
@@ -54,9 +56,8 @@ export class ModelsComponent implements OnInit {
     console.log(ev);
   }
   onEdit(ev: any) {
-    this.form.reset();
+    this.id = ev._id;
     this.form.patchValue({
-      _id: ev._id,
       brand: ev.brandId._id,
       name: ev.name
     });
@@ -72,14 +73,14 @@ export class ModelsComponent implements OnInit {
       confirmButtonText: 'Si, quiero eliminar!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.ms.deleteData(`tables/models/${ev._id}`).
-        subscribe(() => {
+        this.ms.deleteData(`tables/models/${this.id}`)
+        .subscribe(() => {
           this.uService.setAlert({
             icon: 'success',
             title: 'Eliminado!',
             text: 'Tu modelo fue eliminado.',
           });
-          this.models$ = this.ms.getData('tables/models');
+          this.models$ = this.ms.getData('tables/models/list');
         })
       }
     });
@@ -93,8 +94,9 @@ export class ModelsComponent implements OnInit {
     }
     this.ms.postData('tables/models', data)
     .subscribe(() => {
+      this.form.reset();
       this.uService.setToast('success', 'Se creo de forma exitosa!', 'Exito!');
-      this.models$ = this.ms.getData('tables/models');
+      this.models$ = this.ms.getData('tables/models/list');
     })
 
   }
@@ -106,8 +108,9 @@ export class ModelsComponent implements OnInit {
     }
     this.ms.patchData(`tables/models/${item._id}`, data)
     .subscribe(() => {
+      this.form.reset();
       this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
-      this.models$ = this.ms.getData('tables/models');
+      this.models$ = this.ms.getData('tables/models/list');
     })
   }
 }

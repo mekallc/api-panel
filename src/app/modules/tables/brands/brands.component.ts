@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { Observable } from 'rxjs';
 
 import { ConnectService } from '@core/services/connect.service';
@@ -13,11 +13,12 @@ import { UtilsService } from '@core/services/utils.service';
   styleUrls: ['./brands.component.scss']
 })
 export class BrandsComponent implements OnInit {
-  uid!: string;
+  id!: string;
   table: any;
   model = {};
   form = new FormGroup({});
   fields: FormlyFieldConfig[] = BrandsFormlyJson;
+  options: FormlyFormOptions = {};
   dtOptions: DataTables.Settings = {};
 
   items$!: Observable<any[]>;
@@ -33,15 +34,17 @@ export class BrandsComponent implements OnInit {
 
   getData() {
     this.dtOptions = {
-      pagingType: 'full_numbers'
+      pagingType: 'full_numbers',
+      pageLength: 15,
     }
     this.table = BrandsTableJson;
-    this.items$ = this.conn.getData('tables/brands');
+    this.items$ = this.conn.getData('tables/brands/list');
   }
 
   onSubmit() {
     if (this.form.valid) {
-      if (this.uid) {
+      const value: any = this.form.value;
+      if (this.id) {
         this.save(this.form.value);
       } else {
         this.add(this.form.value);
@@ -49,13 +52,10 @@ export class BrandsComponent implements OnInit {
     }
   }
 
-  onView(ev: any) {
-    console.log(ev);
-  }
+  onView(ev: any) {}
 
   onEdit(ev: any) {
-    this.uid = ev._id;
-    this.form.reset();
+    this.id = ev._id;
     this.form.patchValue({
       _id: ev._id,
       name: ev.name,
@@ -68,7 +68,7 @@ export class BrandsComponent implements OnInit {
     this.conn.deleteData(`tables/brands/${ev._id}`)
     .subscribe(() => {
       this.uService.setToast('danger', 'Se elimino de forma exitosa!', 'Exito!');
-      this.items$ = this.conn.getData(`tables/brands`);
+      this.items$ = this.conn.getData(`tables/brands/list`);
     })
   }
 
@@ -81,8 +81,9 @@ export class BrandsComponent implements OnInit {
     }
     this.conn.postData('tables/brands', data)
     .subscribe(() => {
+      this.form.reset();
       this.uService.setToast('success', 'Se creo de forma exitosa!', 'Exito!');
-      this.items$ = this.conn.getData('tables/brands');
+      this.items$ = this.conn.getData('tables/brands/list');
     })
 
   }
@@ -93,10 +94,11 @@ export class BrandsComponent implements OnInit {
       brandId: item.brand,
       vehicles: item.vehicles,
     }
-    this.conn.patchData(`tables/brands/${this.uid}`, data)
+    this.conn.patchData(`tables/brands/${this.id}`, data)
     .subscribe(() => {
+      this.form.reset();
       this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
-      this.items$ = this.conn.getData('tables/brands');
+      this.items$ = this.conn.getData('tables/brands/list');
     })
   }
 

@@ -93,22 +93,25 @@ export class DatatableComponent implements OnInit {
   private dataWithArray(item: any, data: string) {
     const column = data.split('.');
     const newData = item[column[0]][column[1]];
-    if (this.existImage(data)) {
-      return this.setImage(item[data]);
+    if (newData) {
+      if (this.existImage(data)) {
+        return this.setImage(item[data]);
+      }
+      else if (typeof(item[data]) === 'object') {
+        return this.setObject(item[data]);
+      }
+      else if (data.includes('distance')) {
+        return this.setDistance(newData)
+      }
+      else if (this.existDate(data)) {
+        return this.setDate(newData)
+      }
+      else if(data.includes('_id')) {
+        return this.setSlice(newData, 7);
+      }
+      return this.setUndefined(newData);
     }
-    else if (typeof(item[data]) === 'object') {
-      return this.setObject(item[data]);
-    }
-    else if (data.includes('distance')) {
-      return this.setDistance(newData)
-    }
-    else if (this.existDate(data)) {
-      return this.setDate(newData)
-    }
-    else if(data.includes('_id')) {
-      return this.setSlice(newData, 7);
-    }
-    return this.setUndefined(newData);
+    return '';
   }
 
   private setSlice(item: string, position: number) {

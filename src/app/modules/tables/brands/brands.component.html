@@ -15,15 +15,15 @@
     </div>
     <div class="col-lg-4 col-xl-3">
       <div id="form">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <formly-form
             [form]="form"
+            [options]="options"
             [model]="model"
             [fields]="fields">
           </formly-form>
           <div id="actions" class="row g-2">
             <div class="col-md-6">
-              <button class="btn btn-primary w-100" type="submit">
+              <button class="btn btn-primary w-100" (click)="onSubmit()">
                 salvar
               </button>
             </div>
@@ -33,7 +33,6 @@
               </button>
             </div>
           </div>
-        </form>
       </div>
     </div>
   </div>

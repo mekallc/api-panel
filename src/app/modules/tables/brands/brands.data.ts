@@ -37,14 +37,6 @@ export const BrandsFormlyJson: FormlyFieldConfig[] = [
       label: 'Status',
     }
   },
-  {
-    key: '_id',
-    type: 'hide',
-    hide: true,
-    templateOptions: {
-      label: 'ID'
-    }
-  }
 ];
 
 export const BrandsTableJson = {

@@ -28,14 +28,6 @@ export const ModelsFormlyJson: FormlyFieldConfig[] = [
     templateOptions: {
       label: 'Status'
     }
-  },
-  {
-    key: '_id',
-    type: 'text',
-    hide: false,
-    templateOptions: {
-      label: 'ID'
-    }
   }
 ];
 
