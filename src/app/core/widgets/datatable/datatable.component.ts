@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UnitConvertedPipe } from '@core/pipe/unit-converted.pipe';
+import { ConnectService } from '@core/services/connect.service';
 
 @Component({
   selector: 'app-datatable',
@@ -23,11 +24,33 @@ export class DatatableComponent implements OnInit {
   @Output() setTrash = new EventEmitter<object>();
 
   dtOptions: DataTables.Settings = { };
-
+  vehicles: any = [
+    {
+      "_id": "63271a349ca46e0006010703",
+      "name": "CAR",
+      "status": true
+    },
+    {
+      "_id": "63271a349ca46e0006010704",
+      "name": "MOTORCYCLE",
+      "status": true
+    },
+    {
+      "_id": "6409a896f132c641eace6680",
+      "name": "UTV",
+      "status": true
+    },
+    {
+      "_id": "6409a8c5f132c641eace6682",
+      "name": "TRUCK",
+      "status": true
+    }
+  ];
   constructor(
     private dp: DatePipe,
     private router: Router,
     private up: UnitConvertedPipe,
+    private conn: ConnectService,
   ) {}
 
   ngOnInit(): void {
@@ -159,13 +182,19 @@ export class DatatableComponent implements OnInit {
     const html: string[] = [];
     for (const key in data) {
       if (url === 'brands') {
-        newValue = data[key] === '63271a349ca46e0006010703' ? newA : newB;
+        this.setVehicle(data[key]);
+        newValue = this.setVehicle(data[key]);
       } else {
         newValue = +key === 0 ? newA : newB;
       }
       html.push(newValue);
     }
     return html;
+  }
+
+  private setVehicle(uid: string) {
+    const value = this.vehicles.filter((row: any) => row._id === uid)[0];
+    return value?.name || '';
   }
 }
 

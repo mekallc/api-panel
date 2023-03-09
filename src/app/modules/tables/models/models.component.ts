@@ -37,6 +37,7 @@ export class ModelsComponent implements OnInit {
     }
     this.table = ModelsTableJson;
     this.models$ = this.ms.getData('tables/models/list');
+    this.models$.subscribe(res => console.log(res));
     this.ms.getData('tables/brands').subscribe(res =>
       this.fields[1]['templateOptions'].options = res );
   }

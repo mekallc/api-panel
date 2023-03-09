@@ -13,20 +13,14 @@ export const BrandsFormlyJson: FormlyFieldConfig[] = [
   {
     key: 'vehicles',
     type: 'select',
-    templateOptions: {
-      label: 'Tipo de Vehículo',
-      required: true,
+    props: {
+      label: "Marca",
       multiple: true,
-      options: [
-        {
-          label: 'Carro',
-          value: '63271a349ca46e0006010703'
-        },
-        {
-          label: 'Motocicleta',
-          value: '63271a349ca46e0006010704'
-        }
-      ]
+      required: true,
+      options: [],
+      valueProp: "_id",
+      labelProp: "name",
+      placeholder: 'Selecciona...',
     }
   },
   {
