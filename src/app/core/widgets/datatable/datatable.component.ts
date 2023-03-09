@@ -44,6 +44,11 @@ export class DatatableComponent implements OnInit {
       "_id": "6409a8c5f132c641eace6682",
       "name": "TRUCK",
       "status": true
+    },
+    {
+      "_id": "6409d5e1f132c641eace6684",
+      "name": "HEAVY EQUIPMENT",
+      "status": true
     }
   ];
   constructor(
