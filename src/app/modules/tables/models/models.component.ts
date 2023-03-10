@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ConnectService } from '@core/services/connect.service';
-import { UtilsService } from '@core/services/utils.service';
-import { ModelsFormlyJson, ModelsTableJson, Title } from '@module/tables/models/models.data';
 import { Observable } from 'rxjs';
+
+import { UtilsService } from '@core/services/utils.service';
+import { ConnectService } from '@core/services/connect.service';
+import { ModelsFormlyJson, ModelsTableJson, Title } from '@module/tables/models/models.data';
 
 @Component({
   selector: 'app-models',
@@ -11,15 +12,15 @@ import { Observable } from 'rxjs';
   styleUrls: ['./models.component.scss']
 })
 export class ModelsComponent implements OnInit {
-  id!: string;
   table: any;
   model = {};
-  form = new FormGroup({});
-  fields: any[] = ModelsFormlyJson;
-  dtOptions: DataTables.Settings = {};
+  id!: string;
   title = Title;
   brand: any = [];
+  form = new FormGroup({});
   models$!: Observable<any[]>;
+  fields: any[] = ModelsFormlyJson;
+  dtOptions: DataTables.Settings = {};
 
   constructor(
     private ms: ConnectService,
@@ -37,14 +38,12 @@ export class ModelsComponent implements OnInit {
     }
     this.table = ModelsTableJson;
     this.models$ = this.ms.getData('tables/models/list');
-    this.models$.subscribe(res => console.log(res));
     this.ms.getData('tables/brands').subscribe(res =>
       this.fields[1]['templateOptions'].options = res );
   }
 
   onSubmit() {
     if (this.form.valid) {
-      const value: any = this.form.value;
       if (this.id) {
         this.save(this.form.value);
       } else {
@@ -56,13 +55,12 @@ export class ModelsComponent implements OnInit {
   onView(ev: any) {
     console.log(ev);
   }
+
   onEdit(ev: any) {
     this.id = ev._id;
-    this.form.patchValue({
-      brand: ev.brandId._id,
-      name: ev.name
-    });
+    this.form.patchValue({ brand: ev.brandId._id, name: ev.name });
   }
+
   onTrash(ev: any) {
     this.ms.deleteData(`tables/models/${ev._id}`).subscribe(() => {
       this.uService.setToast('success',
@@ -93,7 +91,7 @@ export class ModelsComponent implements OnInit {
       status: item.status,
       brandId: item.brand,
     }
-    this.ms.patchData(`tables/models/${item._id}`, data)
+    this.ms.patchData(`tables/models/${this.id}`, data)
     .subscribe(() => {
       this.form.reset();
       this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
