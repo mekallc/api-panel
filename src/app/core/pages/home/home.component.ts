@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getUserSistema();
     this.userSistema = {
       type: ChartType.BarChart,
       data: [
@@ -27,11 +26,5 @@ export class HomeComponent implements OnInit {
         legend: { position: "none" },
       }
     }
-  }
-
-  getUserSistema() {
-    this.conn.getData('users').subscribe(res => {
-      console.log('USER ', res);
-    })
   }
 }

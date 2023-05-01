@@ -34,6 +34,6 @@ export const BrandsFormlyJson: FormlyFieldConfig[] = [
 ];
 
 export const BrandsTableJson = {
-  title: ['Nombre', 'Tipo Vehiculo'],
-  data: ['name', 'vehicles']
+  title: ['Marca'],
+  data: ['name']
 }

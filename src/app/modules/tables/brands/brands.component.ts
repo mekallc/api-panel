@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { ConnectService } from '@core/services/connect.service';
 import { BrandsFormlyJson, BrandsTableJson } from './brands.data';
@@ -41,7 +41,8 @@ export class BrandsComponent implements OnInit {
         valueProp: "_id",
         labelProp: "name",
         placeholder: 'Selecciona...',
-      }
+      },
+      className: 'custom-select'
     },
     {
       key: 'status',
@@ -95,11 +96,15 @@ export class BrandsComponent implements OnInit {
   }
 
   onTrash(ev: any) {
-    this.conn.deleteData(`tables/brands/${ev._id}`)
-    .subscribe(() => {
-      this.uService.setToast('danger', 'Se elimino de forma exitosa!', 'Exito!');
-      this.items$ = this.conn.getData(`tables/brands/list`);
-    })
+    this.getCountModelsByBrand(ev._id).subscribe(
+      (count: number) => {
+        if (count < 1) {
+          this.removeData(ev);
+        } else {
+          this.alertRemove(ev.name, count);
+        }
+      }
+    );
   }
 
   private add(item: any) {
@@ -130,6 +135,27 @@ export class BrandsComponent implements OnInit {
       this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
       this.items$ = this.conn.getData('tables/brands/list');
     })
+  }
+
+  private getCountModelsByBrand(id: string) {
+    return this.conn.getData(`tables/models/brand/${id}`).pipe(map((res: any) => res.length));
+  }
+
+  private removeData(ev: any) {
+    this.conn.deleteData(`tables/brands/${ev._id}`)
+    .subscribe(() => {
+      this.uService.setToast('danger', 'Se elimino de forma exitosa!', 'Exito!');
+      this.items$ = this.conn.getData(`tables/brands/list`);
+    })
+  }
+
+  private alertRemove(name: string, count: number) {
+    this.uService.setAlert({
+      icon: 'error',
+      title: 'Oops...',
+      html: `La Marca <b>${name}</b> tiene <b>${count}</b> modelos ya registrada.`,
+      footer: 'Para eliminar este registo debe eliminar todas los modelos asociados.'
+    });
   }
 
 }

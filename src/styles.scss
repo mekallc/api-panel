@@ -36,3 +36,7 @@ google-map {
     border-radius: 10px;
   }
 }
+
+.custom-select select {
+  min-height: 200px !important;
+}

@@ -2,16 +2,21 @@ export const MenuDataJson = [
   { name: 'Home', url: '' },
   { name: 'Tablas', url: '',
     children: [
-      { name: 'Categorias', url: 'tables/categories' },
       { name: 'Paises', url: 'tables/countries' },
+      { name: 'Categorias', url: 'tables/categories' },
+      { name: 'Tipo Vehiculo', url: 'tables/vehicles' },
       { name: 'Marca', url: 'tables/brands' },
       { name: 'Modelo', url: 'tables/models' },
     ]
   },
-  { name: 'Solicitudes', url: 'services' },
-  { name: 'Compañias', url: 'companies' },
-  { name: 'Clientes', url: 'customers' },
-  { name: 'Servicios', url: '',
+  { name: 'Servicios', url: 'services' },
+  { name: 'Usuários', url: '',
+  children: [
+    { name: 'Meka LT', url: 'companies' },
+    { name: 'Meka Cliente', url: 'customers' },
+  ]
+  },
+  { name: 'Otros', url: '',
   children: [
     { name: 'Banner', url: 'banners' },
     { name: 'Chat Soporte', url: 'soporte' },
