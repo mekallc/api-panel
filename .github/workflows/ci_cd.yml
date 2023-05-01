@@ -31,9 +31,9 @@ jobs:
       - name: copy file via ssh key
         uses: appleboy/scp-action@master
         with:
-          host:  '170.187.202.70'
-          password: '@@LuisTomas123'
-          username:  root
+          host:  ${{ secrets.HOST }}
+          password: ${{ secrets.PASSWORD }}
+          username: ${{ secrets.USERNAME }}
           source: "./dist/api-panel"
           target: "/var/www/html"
           strip_components: 2
