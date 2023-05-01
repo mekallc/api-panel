@@ -9,14 +9,14 @@ jobs:
   build:
     # using Ubuntu
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1 #this installs node and npm for us
+      - uses: actions/checkout@v0.1.4
+      #this installs node and npm for us
+      - uses: actions/setup-node@v1
         with:
           node-version: "16.x"
-
-      - uses: actions/cache@v1 # this allows for re-using node_modules caching, making builds a bit faster.
+      # this allows for re-using node_modules caching, making builds a bit faster.
+      - uses: actions/cache@v1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -28,80 +28,12 @@ jobs:
       - run: ng build
 
       - name: copy file via ssh key
-        uses: appleboy/scp-action@master
-        env:
-          host:  ${{ secrets.HOST }}
-          username:  ${{ secrets.USERNAME }}
-          port: 22
-          password: ${{ secrets.PASSWORD }}
+        uses: appleboy/scp-action@0.1.4
         with:
+          port: 22
+          host:  ${{ secrets.HOST }}
+          password: ${{ secrets.PASSWORD }}
+          username:  ${{ secrets.USERNAME }}
           source: "./dist/api-panel"
           target: "/var/www/html"
           strip_components: 2
-
-# name: Angular Panel Administrativo
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   ci:
-#     runs-on: ubuntu-latest
-
-#     strategy:
-#       matrix:
-#         node-version: [16.x]
-
-#     steps:
-#       - uses: actions/checkout@v2
-
-#       - name: Use Node.js ${{ matrix.node-version }}
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: ${{ matrix.node-version }}
-
-#       - name: Cache node modules
-#         id: cache-nodemodules
-#         uses: actions/cache@v2
-#         env:
-#           cache-name: cache-node-modules
-#         with:
-#           # caching node_modules
-#           path: node_modules
-#           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-#           restore-keys: |
-#             ${{ runner.os }}-build-${{ env.cache-name }}-
-#             ${{ runner.os }}-build-
-#             ${{ runner.os }}-
-
-#       - name: Install Dependencies
-#         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-#         run: |
-#           npm ci
-#       - name: Build
-#         run: |
-#           npm run build --prod
-#       # - name: Sync Files
-#       #   uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-#       #   with:
-#       #     server: ${{ secrets.HOST }}
-#       #     username: ${{ secrets.USERNAME }}
-#       #     password: ${{ secrets.PASSWORD }}
-#       #     port: 22
-#       #     local_path: ./dist/api-panel
-#       #     remote_path: /var/www/html/api-painel/
-#       #     sftp_only: true
-#       #     sftpArgs: '-o ConnectTimeout=5'
-#       - name: Deploy Server
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{ secrets.HOST }}
-#           username: ${{ secrets.USERNAME }}
-#           password: ${{ secrets.PASSWORD }}
-#           script: |
-#             cd /root/services/api-panel
-#             git pull origin main
-#             git status
-#             npm install --only=prod
