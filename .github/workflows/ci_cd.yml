@@ -32,9 +32,9 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           port: 22
-          host:  ${{ secrets.HOST }}
-          password: ${{ secrets.PASSWORD }}
-          username:  ${{ secrets.USERNAME }}
+          host:  '170.187.202.70'
+          password: 'y)/L 6YvZ0QD'
+          username:  root
           source: "./dist/api-panel"
           target: "/var/www/html"
           strip_components: 2
