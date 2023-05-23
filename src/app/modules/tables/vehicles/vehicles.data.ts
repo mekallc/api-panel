@@ -11,6 +11,15 @@ export const VehiclesFormlyJson: FormlyFieldConfig[] = [
     }
   },
   {
+    key: 'order',
+    type: 'input',
+    templateOptions: {
+      label: 'Orden',
+      required: true,
+      type: 'number',
+    }
+  },
+  {
     key: 'status',
     type: 'checkbox',
     defaultValue: true,
@@ -21,13 +30,14 @@ export const VehiclesFormlyJson: FormlyFieldConfig[] = [
 ];
 
 export const VehiclesTableJson = {
-  title: ['Tipo Vehiculo'],
-  data: ['name']
+  title: ['Tipo Vehiculo', 'Orden'],
+  data: ['name', 'order']
 }
 
 export interface IModel {
   _id?: string;
   name: string;
+  order: number;
 }
 
 export const Title = 'Tipo Vehiculo';

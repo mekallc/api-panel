@@ -29,6 +29,7 @@ export class CustomerComponent implements OnInit {
     }
     this.table = CustomersTableJson,
     this.items$ = this.connService.getData('users/customers')
+    this.items$.subscribe(res => console.log(res));
   }
 
   onView(ev: any) {

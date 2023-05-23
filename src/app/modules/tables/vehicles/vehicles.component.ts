@@ -55,8 +55,9 @@ export class VehiclesComponent implements OnInit {
   }
 
   onEdit(ev: any) {
+    console.log(ev);
     this.id = ev._id;
-    this.form.patchValue({ name: ev.name });
+    this.form.patchValue({ name: ev.name, order: ev.order });
   }
 
   onTrash(ev: any) {
@@ -87,6 +88,7 @@ export class VehiclesComponent implements OnInit {
   }
   private save(item: any) {
     const data = {
+      order: item.order,
       name: item.name,
       status: item.status,
       brandId: item.brand,

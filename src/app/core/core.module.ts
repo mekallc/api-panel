@@ -20,6 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     HttpClientJsonpModule,
     ToastrModule.forRoot(),
-  ]
+  ],
+  providers: []
 })
 export class CoreModule { }

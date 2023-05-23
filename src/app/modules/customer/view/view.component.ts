@@ -37,6 +37,7 @@ export class ViewComponent implements OnInit {
       this.totalServices = res.length;
     }));
     this.user$.subscribe(res => console.log(res));
+    console.log(this.totalServices);
   }
   onView(ev: any) {
     this.router.navigate(['pages', 'services', 'view', ev._id])

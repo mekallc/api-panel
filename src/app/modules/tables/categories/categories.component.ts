@@ -32,10 +32,12 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
+    console.log(this.form);
   }
 
   getData() {
     this.dtOptions = {
+      pageLength: 20,
       pagingType: 'full_numbers'
     }
     this.table = CategoriesTableJson;
@@ -58,6 +60,7 @@ export class CategoriesComponent implements OnInit {
     const upload: any = await this.fireService.upload('admin', value.picture[0]);
     if(upload) {
       value.picture = upload ? upload: '';
+      console.log(value);
       this.conn.postData('tables/categories', value)
       .subscribe(() => {
         this.uService.setToast('success', 'Se creo de forma exitosa!', 'Exito!');
@@ -68,19 +71,25 @@ export class CategoriesComponent implements OnInit {
 
   async onEdit(value: any) {
     const id = value._id;
-    const upload: any = await this.fireService.upload('admin', value.picture[0]);
-    if(upload) {
-      delete value._id;
-      value.picture = upload ? upload: '';
-      this.conn.patchData(`tables/categories/${id}`, value)
-      .subscribe(() => {
-        this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
-        this.items$ = this.conn.getData(`tables/categories`);
-      })
+    delete value._id;
+    console.log(typeof value.picture);
+    if (typeof value.picture === 'object') {
+      const upload: any = await this.fireService.upload('admin', value.picture[0]);
+      if (upload) {
+        value.picture = upload ? upload: '';
+      }
     }
+    console.log(value);
+    this.conn.patchData(`tables/categories/${id}`, value)
+    .subscribe(() => {
+      this.uService.setToast('success', 'Se actualizo de forma exitosa!', 'Exito!');
+      this.items$ = this.conn.getData(`tables/categories`);
+    })
   }
 
   setEdit(ev: any) {
+    ev.order = ev.order ? ev.order : 0;
+    console.log(ev);
     this.form.reset();
     this.form.setValue(ev);
   }

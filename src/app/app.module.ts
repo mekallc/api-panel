@@ -18,7 +18,6 @@ import { FireModule } from '@core/fire.module';
     BrowserModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+bootstrap: [AppComponent]
 })
 export class AppModule { }

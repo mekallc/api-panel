@@ -20,6 +20,16 @@ export const CategoriesFormlyJson: FormlyFieldConfig[] = [
     }
   },
   {
+    key: 'order',
+    type: 'input',
+    templateOptions: {
+      label: 'Orden',
+      placeholder: '',
+      required: true,
+      type: 'number'
+    }
+  },
+  {
     key: 'picture',
     type: 'file',
     templateOptions: {
@@ -38,8 +48,8 @@ export const CategoriesFormlyJson: FormlyFieldConfig[] = [
 ];
 
 export const CategoriesTableJson = {
-  title: ['Nombre', 'Icon'],
-  data: ['name', 'picture']
+  title: ['Nombre', 'Order', 'Icon'],
+  data: ['name', 'order', 'picture']
 }
 
 export const Title = 'Categorias';
