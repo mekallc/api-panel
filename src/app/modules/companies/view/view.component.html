@@ -1,4 +1,4 @@
-<ng-container *ngIf="(company$ | async) as company">
+<ng-container *ngIf="(company$ | async) as company; else semDados">
   <h3 class="titulo">
     {{ company.name | titlecase }}:
     {{ company.user.first_name }} {{ company.user.last_name }}
@@ -9,7 +9,7 @@
         <div class="item">
           <p>
             <strong>Teléfono:</strong>
-            (+{{ company.user.country.phone_code }}) {{ company.user.phone }}
+            {{ company.user?.phone }}
           </p>
         </div>
         <div class="item">
@@ -21,7 +21,7 @@
         <div class="item">
           <p>
             <strong>País:</strong>
-            {{ company.user.country.name }}
+            {{ company.user.country?.name }}
           </p>
         </div>
         <div class="item">
@@ -77,24 +77,29 @@
       </div>
     </div>
   </div>
-</ng-container>
-<div class="services mt-5">
-  <h3 class="titulo servico mb-2">Servicios
-    <span class="float-right">
-      Total: {{ totalServices }}
-      {{ totalServices > 1 ? 'servicios' : 'servicio' }}
-    </span>
-  </h3>
-  <div class="row justify-content-center">
-    <div class="col-xl-12">
-      <app-datatable
-        [table]="table"
-        [options]="dtOptions"
-        [actions]="['view']"
-        [data]="(services$ | async)"
-        (setView)="onView($event)"
-      ></app-datatable>
+  <div class="services mt-5">
+    <h3 class="titulo servico mb-2">Servicios
+      <span class="float-right">
+        Total: {{ totalServices }}
+        {{ totalServices > 1 ? 'servicios' : 'servicio' }}
+      </span>
+    </h3>
+    <div class="row justify-content-center">
+      <div class="col-xl-12">
+        <app-datatable
+          [table]="table"
+          [options]="dtOptions"
+          [actions]="['view']"
+          [data]="(services$ | async)"
+          (setView)="onView($event)"
+        ></app-datatable>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+<ng-template #semDados>
+  <div class="card py-5">
+    <h2 class="text-center">Falta registrar la compañia</h2>
+  </div>
+</ng-template>
 

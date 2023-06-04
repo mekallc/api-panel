@@ -11,7 +11,7 @@
         [table]="table"
         [options]="dtOptions"
         [actions]="['view', 'edit']"
-        [data]="(items$ | async)"
+        [data]="(banners$ | async)"
         (setView)="onView($event)"
         (setEdit)="onEdit($event)"
       ></app-datatable>

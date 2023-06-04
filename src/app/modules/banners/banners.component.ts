@@ -12,7 +12,7 @@ import { BannersTableJson, Title } from './banners.data';
 export class BannersComponent implements OnInit {
   title: string = Title;
   table: any;
-  items$!: Observable<any[]>
+  banners$!: Observable<any[]>
   dtOptions: DataTables.Settings = {};
 
   constructor(
@@ -31,8 +31,8 @@ export class BannersComponent implements OnInit {
   getData() {
     this.dtOptions = { pagingType: 'full_numbers' };
     this.table = BannersTableJson;
-    this.items$ = this.connService.getData('banners');
-    this.items$.subscribe(res => console.log('BANNER', res));
+    this.banners$ = this.connService.getData('banners');
+    this.banners$.subscribe(res => console.log('BANNER', res));
   }
 
   onCreate() {
