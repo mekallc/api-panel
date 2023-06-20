@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NotificationsComponent } from './notifications.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const app: Routes = [
   { path: '', component: NotificationsComponent }
@@ -16,6 +17,7 @@ const app: Routes = [
   imports: [
     NgbModule,
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(app),
   ]
 })

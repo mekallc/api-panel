@@ -1,13 +1,26 @@
 <ng-container>
   <div class="row">
-    <div class="col-md-6 col-lg-4rr">
+    <div class="col-md-6 col-lg-4">
       <div class="card box-dash">
-        <h3>Usuários en el Sistema</h3>
         <ng-container *ngIf="userSistema && userSistema.data &&userSistema.type && userSistema.options">
           <google-chart style="width: 100%; height: 300px;"
+            [title]="userSistema.title"
             [type]="userSistema.type"
             [data]="userSistema.data"
             [options]="userSistema.options"
+          ></google-chart>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="card box-dash">
+        <ng-container *ngIf="service && service.data &&service.type && service.options">
+          <google-chart style="width: 100%; height: 300px;"
+            [title]="service.title"
+            [type]="service.type"
+            [data]="service.data"
+            [options]="service.options"
+            [columns]="['Servicios', 'Total']"
           ></google-chart>
         </ng-container>
       </div>
