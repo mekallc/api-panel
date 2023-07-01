@@ -37,6 +37,8 @@
     "datatables.net-bs5": "^1.11.3",
     "jquery": "^3.6.0",
     "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "momment": "^0.0.1",
     "ngx-moment": "^6.0.2",
     "ngx-toastr": "^15.2.0",
     "rxjs": "~7.5.0",

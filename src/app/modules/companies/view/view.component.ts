@@ -34,7 +34,7 @@ export class ViewComponent implements OnInit {
 
   getData(uid: string) {
     if (uid) {
-      const company$ = this.connService.getData(`companies/user/${uid}`)
+      const company$ = this.connService.getData(`companies/user/${uid}`);
       this.company$ = company$;
       this.services$ = company$.pipe(
         switchMap((res: any) =>

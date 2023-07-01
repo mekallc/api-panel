@@ -8,6 +8,12 @@
       <div class="user">
         <div class="item">
           <p>
+            <strong>Fecha Creación:</strong>
+            {{ company.createdAt | date: 'dd-MM-YYYY' }}
+          </p>
+        </div>
+        <div class="item">
+          <p>
             <strong>Teléfono:</strong>
             {{ company.user?.phone }}
           </p>

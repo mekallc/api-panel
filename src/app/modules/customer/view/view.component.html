@@ -2,18 +2,36 @@
   <h3 class="titulo">{{ user.first_name }} {{ user.last_name }}</h3>
   <div class="row justify-content-center">
     <div class="col-md-7">
-      <table class="table table-hover table-striped table-condensed">
-        <tr>
-          <th>Teléfono</th>
-          <th>Correo Electronico</th>
-          <th>Pais</th>
-        </tr>
-        <tr>
-          <td>+({{ user.country.phone_code }}) {{ user.phone }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.country.name }}</td>
-        </tr>
-      </table>
+      <div class="row">
+        <div class="col-6">
+          <div class="mb-3">
+            <p>
+              <strong>Teléfono:</strong>
+              +({{ user?.country?.phone_code }}) {{ user?.phone }}
+            </p>
+          </div>
+          <div class="mb-3">
+            <p>
+              <strong>Correo Electronico:</strong>
+              {{ user.email }}
+            </p>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="mb-3">
+            <p>
+              <strong>Pais:</strong>
+              {{ user?.country?.name }}
+            </p>
+          </div>
+          <div class="mb-3">
+            <p>
+              <strong>Fecha Creación:</strong>
+              {{ user.createdAt | date: 'dd-MM-YYYY' }}
+            </p>
+          </div>
+        </div>
+      </div>
       <h6 class="mt-4"><strong>Token Push</strong></h6>
       <div class="code mt-3">
         {{ user.push }}
@@ -36,7 +54,7 @@
     </div>
   </div>
 </ng-container>
-<div *ngIf="totalServices > 0" class="services mt-5">
+<div class="services mt-5">
   <h3 class="titulo mb-2">Servicios</h3>
   <div class="row justify-content-center">
     <div class="col-xl-12">

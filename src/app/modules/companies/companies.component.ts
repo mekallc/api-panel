@@ -28,7 +28,6 @@ export class CompaniesComponent implements OnInit {
     }
     this.table = CompaniesTableJson;
     this.items$ = this.connService.getData('users/companies')
-    this.items$.subscribe(res => console.log(res));
   }
 
   onView(ev: any) {
