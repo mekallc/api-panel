@@ -31,6 +31,11 @@ const app: Routes = [
           import('@module/banners/banners.module').then( m => m.BannersModule)
       },
       {
+        path: 'languages',
+        loadChildren: () =>
+          import('@module/language/language.module').then( m => m.LanguageModule)
+      },
+      {
         path: 'services',
         loadChildren: () =>
           import('@module/services/services.module').then( m => m.ServicesModule)

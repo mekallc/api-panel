@@ -1,0 +1,17 @@
+<div class="container">
+  <h2 class="titulo">
+    {{ title }}
+  </h2>
+  <div class="row justify-content-center">
+    <div class="col-xl-12">
+      <app-datatable
+        [table]="table"
+        [options]="dtOptions"
+        [status]="false"
+        [actions]="['edit']"
+        [data]="(items$ | async)"
+        (setEdit)="onEdit($event)"
+      ></app-datatable>
+    </div>
+  </div>
+</div>

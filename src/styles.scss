@@ -3,6 +3,8 @@
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 @import 'ngx-toastr/toastr';
+@import 'codemirror/lib/codemirror';
+@import 'codemirror/theme/material';
 
 .titulo {
   margin-bottom: 2rem;
@@ -39,4 +41,8 @@ google-map {
 
 .custom-select select {
   min-height: 200px !important;
+}
+
+.CodeMirror {
+  height: 70vh !important;
 }

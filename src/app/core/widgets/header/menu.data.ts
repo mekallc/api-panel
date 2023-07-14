@@ -19,6 +19,7 @@ export const MenuDataJson = [
   { name: 'Otros', url: '',
   children: [
     { name: 'Banner', url: 'banners' },
+    { name: 'Idiomas', url: 'languages' },
     { name: 'Chat Soporte', url: 'soporte' },
     { name: 'Notificaciones', url: 'push' },
   ]

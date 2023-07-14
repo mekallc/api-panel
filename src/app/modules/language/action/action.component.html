@@ -1,0 +1,16 @@
+<ng-container *ngIf="lang">
+  <section id="banners actions">
+    <h2 class="titulo">
+      Idioma: {{ lang.name | uppercase }} / {{ lang.type === 1 ? 'Meka' : 'Meka LT' }}
+      <span class="float-right">
+        <button class="btn btn-warning me-2" (click)="onBack()">Regresar</button>
+        <button class="btn btn-primary" (click)="onSave()">Salvar</button>
+      </span>
+    </h2>
+  </section>
+  <ngx-codemirror
+    [(ngModel)]="content"
+    [options]="options"
+  ></ngx-codemirror>
+
+</ng-container>
