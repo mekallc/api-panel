@@ -9,6 +9,7 @@ import { ViewComponent } from './view/view.component';
 import { CustomerComponent } from './customer.component';
 import { ActionsComponent } from './actions/actions.component';
 import { DatatableModule } from '@core/widgets/datatable/datatable.module';
+import { FormsModule } from '@angular/forms';
 
 const app: Routes = [
   { path: '', component: CustomerComponent },
@@ -25,6 +26,7 @@ const app: Routes = [
   ],
   imports: [
     NgbModule,
+    FormsModule,
     CommonModule,
     DatatableModule,
     FontAwesomeModule,

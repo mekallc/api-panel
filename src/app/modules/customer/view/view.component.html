@@ -1,28 +1,31 @@
 <ng-container *ngIf="(user$ | async) as user">
-  <h3 class="titulo">{{ user.first_name }} {{ user.last_name }}</h3>
+  <h3 class="titulo">{{ user.first_name }} {{ user.last_name }}
+    <span class="float-right">
+      <button class="btn btn-warning mx-1" (click)="onEdit()" *ngIf="!switchEdit">Editar</button>
+      <button class="btn btn-danger mx-1" (click)="onCancel()" *ngIf="switchEdit">Cancelar</button>
+      <button class="btn btn-primary mx-1" (click)="onSave(user._id)" *ngIf="switchEdit">Actualizar</button>
+    </span>
+  </h3>
   <div class="row justify-content-center">
     <div class="col-md-7">
       <div class="row">
         <div class="col-6">
           <div class="mb-3">
-            <p>
-              <strong>Teléfono:</strong>
-              +({{ user?.country?.phone_code }}) {{ user?.phone }}
-            </p>
+            <p *ngIf="!switchEdit"><strong>Teléfono: </strong>{{ user?.phone }}</p>
+            <input *ngIf="switchEdit" type="tel" class="form-control" [(ngModel)]="client.phone" placeholder="Teléfono">
           </div>
           <div class="mb-3">
-            <p>
-              <strong>Correo Electronico:</strong>
-              {{ user.email }}
-            </p>
+            <p *ngIf="!switchEdit"><strong>Correo Electrónico: </strong>{{ user?.email }}</p>
+            <input *ngIf="switchEdit" type="email" class="form-control" [(ngModel)]="client.email" placeholder="Correo Electrónico">
           </div>
         </div>
         <div class="col-6">
           <div class="mb-3">
-            <p>
-              <strong>Pais:</strong>
-              {{ user?.country?.name }}
-            </p>
+            <p *ngIf="!switchEdit" ><strong>País: </strong>{{ user.country?.name }}</p>
+            <select *ngIf="switchEdit" class="form-select" [(ngModel)]="client.country">
+              <option selected>{{ user.country?.name }}</option>
+              <option *ngFor="let country of country$ | async" [value]="country._id">{{ country.name }}</option>
+            </select>
           </div>
           <div class="mb-3">
             <p>
