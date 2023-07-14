@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment-timezone';
 import { ConnectService } from '@core/services/connect.service';
 import { Observable } from 'rxjs';
+import { DataTableJson, Title } from './notifications.data';
+import { UtilsService } from '@core/services/utils.service';
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
@@ -14,18 +16,26 @@ export class NotificationsComponent implements OnInit {
   hours!: string[];
   minuts!: string[];
   form!: FormGroup;
+  title = Title;
+  table: any;
+  dtOptions: DataTables.Settings = {};
+  count!: string;
   constructor(
     private fb: FormBuilder,
     private http: ConnectService,
+    private uService: UtilsService,
   ) { }
 
   ngOnInit(): void {
     this.loadForm();
     this.getData();
+    const count = this.form.value.body.length;
+    console.log(count);
   }
 getData() {
+  this.table = DataTableJson;
+  this.dtOptions = { pagingType: 'full_numbers' };
   this.items$ = this.http.getData('notification');
-  this.items$.subscribe(res => console.log('NOT', res));
 }
 
 
@@ -39,10 +49,11 @@ getData() {
     if (value.cliente) { value.type.push(0); }
     if (value.lt) { value.type.push(1); }
     value.fecha = timestamp;
-    console.log(value);
     this.http.postData('notification', value).subscribe((res: any) => {
-      console.log('POST NOTIFICATION', res);
       this.getData();
+      this.uService.setAlert({
+        title: ''
+      })
     })
   }
 
@@ -52,14 +63,24 @@ getData() {
     this.activeToken = lt || cliente ? true : false;
   }
 
+  onTrash(ev: any) {
+    this.http.deleteData(`notification/${ev._id}`).subscribe(() => {
+      this.getData();
+      this.uService.setAlert({
+        title: 'Se elimino la notificación',
+        text: 'Este proceso es irreversible',
+        icon: 'info'
+      })
+    })
+  }
+
   private loadForm() {
     this.form = this.fb.group({
-      token: [''],
       cliente: [''],
       lt: [''],
-      title: ['Titulo', Validators.required],
-      body: ['Test', Validators.required],
-      fecha: ['2023-06-03', Validators.required],
+      title: ['', Validators.required],
+      body: ['', Validators.required],
+      fecha: ['', Validators.required],
     });
     console.log(this.form);
   }

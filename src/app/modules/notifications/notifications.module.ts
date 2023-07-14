@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NotificationsComponent } from './notifications.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DatatableModule } from '@core/widgets/datatable/datatable.module';
 
 const app: Routes = [
   { path: '', component: NotificationsComponent }
@@ -17,6 +18,7 @@ const app: Routes = [
   imports: [
     NgbModule,
     CommonModule,
+    DatatableModule,
     ReactiveFormsModule,
     RouterModule.forChild(app),
   ]

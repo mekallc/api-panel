@@ -176,6 +176,7 @@ export class DatatableComponent implements OnInit {
     if (item.includes('startAt')) return true;
     if (item.includes('starAt')) return true;
     if (item.includes('endAt')) return true;
+    if (item.includes('publish')) return true;
     return false;
   }
 
