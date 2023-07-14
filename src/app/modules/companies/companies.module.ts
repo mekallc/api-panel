@@ -7,6 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatatableModule } from '@core/widgets/datatable/datatable.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
 
 const app: Routes = [
   { path: '', component: CompaniesComponent },
@@ -23,6 +24,7 @@ const app: Routes = [
   ],
   imports: [
     NgbModule,
+    FormsModule,
     CommonModule,
     DatatableModule,
     FontAwesomeModule,
