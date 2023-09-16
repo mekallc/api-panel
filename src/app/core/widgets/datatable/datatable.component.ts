@@ -115,6 +115,14 @@ export class DatatableComponent implements OnInit {
     else if(data.includes('_id')) {
       return this.setSlice(item[data], 7);
     }
+    else if (data.includes('fullName')) {
+      return item.user?.first_name + ' ' + item.user?.last_name ;
+    } else if (data.includes('company')) {
+      if (item.company) {
+        return item.company.name;
+      }
+      return '';
+    }
     return this.setUndefined(item[data]);
   }
 
@@ -154,7 +162,7 @@ export class DatatableComponent implements OnInit {
   }
 
   private setDate(item: string){
-    return this.dp.transform(item, 'dd-MM-yyyy | HH:mm', 'es-ES');
+    return this.dp.transform(item, 'dd-MM-yyyy', 'es-ES');
   }
 
   private setDistance(item: number) {
@@ -201,6 +209,14 @@ export class DatatableComponent implements OnInit {
   private setVehicle(uid: string) {
     const value = this.vehicles.filter((row: any) => row._id === uid)[0];
     return value?.name || '';
+  }
+
+  private dataCliente() {
+    return 'Client';
+  }
+
+  private dataCompany() {
+    return 'Company';
   }
 }
 
