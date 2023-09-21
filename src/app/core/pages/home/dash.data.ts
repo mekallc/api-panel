@@ -16,4 +16,5 @@ export interface ChartInterface {
   type?: any;
   options?: object;
   columns?: string[]
+  series?: any;
 }

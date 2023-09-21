@@ -1,6 +1,9 @@
 <ng-container>
   <div class="row">
-    <div class="col-md-6 col-lg-4">
+    <div class="col-md-6 col-lg-5">
+      <div class="alert alert-primary" role="alert" >
+        <span class="h5 me-2" style="font-weight: 800;"> {{ totalPlataforma }}</span>Usuarios en la plataforma
+      </div>
       <div class="card box-dash">
         <ng-container *ngIf="userSistema && userSistema.data &&userSistema.type && userSistema.options">
           <google-chart style="width: 100%; height: 300px;"
@@ -12,16 +15,18 @@
         </ng-container>
       </div>
     </div>
-    <div class="col-md-6 col-lg-4">
+    <div class="col-md-6 col-lg-7">
+      <div class="alert alert-dark" role="alert" style="font-weight: 700;">
+        <span class="h5 me-2"  style="font-weight: 800;">{{ totalServices }}</span>Total de servicios hasta hoy
+      </div>
       <div class="card box-dash">
         <ng-container *ngIf="service && service.data &&service.type && service.options">
           <google-chart style="width: 100%; height: 300px;"
-            [title]="service.title"
-            [type]="service.type"
-            [data]="service.data"
-            [options]="service.options"
-            [columns]="['Servicios', 'Total']"
-          ></google-chart>
+          [title]="service.title"
+          [type]="service.type"
+          [data]="service.data"
+          [options]="service.options"
+        ></google-chart>
         </ng-container>
       </div>
     </div>
