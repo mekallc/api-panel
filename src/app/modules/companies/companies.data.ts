@@ -1,6 +1,6 @@
 export const CompaniesTableJson = {
-  title: ['Nombre', 'Apellido', 'E-mail', 'Teléfono'],
-  data: ['first_name', 'last_name', 'email', 'phone']
+  title: ['País', 'Nombre', 'Apellido', 'E-mail', 'Teléfono'],
+  data: ['country.name', 'first_name', 'last_name', 'email', 'phone']
 }
 
 export const ServicesTableJson = {
