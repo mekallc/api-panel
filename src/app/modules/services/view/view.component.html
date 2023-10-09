@@ -1,7 +1,10 @@
 <ng-container *ngIf="(service$ | async) as service">
   <h3 class="titulo">
     Servicio: {{ service._id }}
-    <span>{{ service.status | uppercase }}</span>
+    <span>
+      {{ service.status | uppercase }}
+      <button type="button" class="btn btn-danger ms-2" (click)="onDelete(service._id)">Eliminar</button>
+    </span>
   </h3>
   <div class="row justify-content-center">
     <div class="col-xl-10">
