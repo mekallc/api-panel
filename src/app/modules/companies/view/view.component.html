@@ -51,10 +51,12 @@
     <div class="col-md-6">
       <div class="user bg-grey">
         <div class="item">
-          <p>
-            <strong>Status:</strong>
-            {{ company.status ? 'Activo' : 'Inactivo'}}
-          </p>
+          <ng-container>
+            <p>
+              <strong>Status:</strong>
+              {{ company.status ? 'Activo' : 'Inactivo'}}
+            </p>
+          </ng-container>
         </div>
         <div class="item">
           <p>

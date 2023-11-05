@@ -33,6 +33,7 @@ export class ViewComponent implements OnInit {
 
   getData(uid: string) {
     this.service$ = this.connService.getData(`services/${uid}`);
+    this.service$.subscribe((res) => console.log(res));
     this.chat$ = this.fireService.getChatByService(uid);
   }
 

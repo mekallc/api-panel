@@ -13,32 +13,9 @@ export class HomeComponent implements OnInit {
   userCountry!: any;
   totalPlataforma!: number;
   totalServices!: number;
-  countries = [
-    {
-        "_id": "64792b3e1b4d0500078045e1",
-        "name": "Brazil",
-        "iso2": "BR"
-    },
-
-    {
-        "_id": "64792b3e1b4d0500078045e3",
-        "name": "Colombia",
-        "iso2": "CO"
-    },
-
-    {
-        "_id": "64792b3e1b4d0500078045e5",
-        "name": "Dominican Republic",
-        "iso2": "DO"
-    },
-
-    {
-        "_id": "64792b3e1b4d0500078045e9",
-        "name": "Mexico",
-        "iso2": "MX"
-    }
-  ];
-
+  table:any = [];
+  dtOptions: DataTables.Settings = {};
+  users!: any[];
   constructor(
     private conn: ConnectService
   ) { }
@@ -50,7 +27,8 @@ export class HomeComponent implements OnInit {
 
   getUsers() {
     this.conn.getData('users').subscribe((res: any) => {
-      this.getUserWithCountries(res);
+      // this.getUserWithCountries(res);
+      this.getAllCountries(res);
       const cliente: number = res.filter((row: any) => row.type_user === 0).length;
       const lt: number = res.filter((row: any) => row.type_user === 1).length;
       this.totalPlataforma = lt + cliente;
@@ -99,35 +77,54 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  private getUserWithCountries(data: any) {
-    console.log(data);
-    if (data) {
-      const RD = this.setCountry('64792b3e1b4d0500078045e5', data);
-      const MX = this.setCountry('64792b3e1b4d0500078045e9', data);
-      const CO = this.setCountry('64792b3e1b4d0500078045e3', data);
-      const BR = this.setCountry('64792b3e1b4d0500078045e1', data);
-      console.log(RD);
-      console.log(MX);
-      console.log(CO);
-      console.log(BR);
-      this.userCountry = {
-        type: ChartType.ColumnChart,
-        title: 'Usuários por Paises',
-        chartColumns: ['Total', 'Cliente', 'LT'],
-        data: [
-          ["RD", RD[0], RD[1], RD[2]],
-          ["CO", CO[0], CO[1], CO[2]],
-          ["MX", MX[0], MX[1], MX[2]],
-          // ["BR", BR[0], BR[1], BR[2]],
-        ],
-        options: {
-          colors: ['#145290', '#FFD30D', '#4C4C4C'],
-          is3D: true,
-          legend: { position: "top" },
-          chartArea: { width: '90%' },
-        },
+  private getAllCountries(data: any) {
+    let newData: any = [];
+    let newTable: any = [];
+    this.conn.getData('tables/countries').subscribe((res: any) => {
+      if (res) {
+        res.forEach((el: any) => {
+          const value = this.setCountry2(el.iso2, el._id, data);
+          const newItem = {
+            name: el.name,
+            total: value[1],
+            lt: value[3],
+            cliente: value[2],
+            porcCliente: this.porc(value)
+          }
+          newData.push(value);
+          newTable.push(newItem);
+        });
+        this.userCountry = {
+          type: ChartType.ColumnChart,
+          title: 'Usuários por Paises',
+          chartColumns: ['Total', 'Cliente', 'LT'],
+          data: newData,
+          options: {
+            colors: ['#145290', '#FFD30D', '#4C4C4C'],
+            is3D: true,
+            legend: { position: "top" },
+            chartArea: { width: '90%' },
+          },
+        };
+        this.getTable(newTable);
       }
+    })
+  }
+
+  porc(value: any[]) {
+    return `${((value[1] / this.totalPlataforma) * 100).toFixed(0)}%`
+  }
+
+  getTable(data: any) {
+    console.log(data);
+    this.dtOptions = {
+      pagingType: 'full_numbers'
     }
+    this.table = {
+      title: ['PAÍS', 'TOTAL', 'M. CLIENTE', 'M. LT', '% PAIS'],
+      data: ['name', 'total', 'cliente', 'lt', 'porcCliente']
+    }
+    this.users = data;
   }
 
   private setCountry(country: string, data: any) {
@@ -135,5 +132,12 @@ export class HomeComponent implements OnInit {
     const RD0 = RD.filter((row: any) => row.type_user === 0).length;
     const RD1 = RD.filter((row: any) => row.type_user === 1).length;
     return [RD.length, RD0, RD1];
+  }
+
+  private setCountry2(name: string, country: string, data: any) {
+    const RD: any = data.filter((row: any) => row.country._id === country);
+    const RD0 = RD.filter((row: any) => row.type_user === 0).length;
+    const RD1 = RD.filter((row: any) => row.type_user === 1).length;
+    return [name, RD.length, RD0, RD1];
   }
 }

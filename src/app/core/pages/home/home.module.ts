@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { DatatableModule } from '@core/widgets/datatable/datatable.module';
 
 const app: Routes = [ { path: '', component: HomeComponent } ];
 
@@ -13,6 +14,7 @@ const app: Routes = [ { path: '', component: HomeComponent } ];
   imports: [
     CommonModule,
     GoogleChartsModule,
+    DatatableModule,
     RouterModule.forChild(app),
   ]
 })
