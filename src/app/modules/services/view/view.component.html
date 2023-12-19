@@ -41,64 +41,72 @@
           <li [ngbNavItem]="2">
             <a ngbNavLink>Cliente</a>
             <ng-template ngbNavContent>
-              <div class="row justify-content-center">
-                <div class="col-md-10 mb-3">
-                  <div class="mt-4">
-                    <h4>
-                      <strong>
-                        {{service.user.first_name | titlecase}}
-                        {{service.user.last_name | titlecase}}
-                      </strong>
-                    </h4>
-                    <h5 style="font-weight: 700">País: {{ service.company.user.country.name }}</h5>
-                    <p><strong>Correo Electrónico:</strong> {{ service.user.email }}</p>
-                    <p><strong>Teléfono de Contacto:</strong> {{ service.user.phone }}</p>
-                    <h4><strong>Score:</strong> {{ service.user.score }}</h4>
+              <ng-container *ngIf="service.user && service.user._id">
+                <div class="row justify-content-center">
+                  <div class="col-md-10 mb-3">
+                    <div class="mt-4">
+                      <h4>
+                        <strong>
+                          {{service?.user.first_name | titlecase}}
+                          {{service?.user.last_name | titlecase}}
+                        </strong>
+                      </h4>
+                      <h5 style="font-weight: 700">País: {{ service.company?.user?.country.name }}</h5>
+                      <p><strong>Correo Electrónico:</strong> {{ service?.user.email }}</p>
+                      <p><strong>Teléfono de Contacto:</strong> {{ service?.user.phone }}</p>
+                      <h4><strong>Score:</strong> {{ service?.user.score }}</h4>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ng-container>
             </ng-template>
           </li>
-          <li [ngbNavItem]="3">
-            <a ngbNavLink>Compañia</a>
-            <ng-template ngbNavContent>
-              <div class="row justify-content-center">
-                <div class="col-md-10 mb-3">
-                  <div class="mt-4">
-                    <h4>
-                      <strong>
-                        {{service.company.name | titlecase}}
-                      </strong>
-                    </h4>
-                    <p><strong>Tipo Compañia:</strong> {{ service.company.typeCompany.name | titlecase }}</p>
-                    <p><strong>Categorias:</strong>
-                      <span *ngFor="let cat of service.company.categories">
-                        {{ cat.name }},
-                      </span>
-                    </p>
-                    <p><strong>Método Pago:</strong>
-                      <span *ngFor="let paid of service.company.payment">
-                        {{ paid }},
-                      </span>
-                    </p>
-                    <h4><strong>Score:</strong> {{ service.company.user.score }}</h4>
-                  </div>
-                  <ng-container *ngIf="service.company && service.company.user">
-                    <div class="mt-4">
-                      <div class="panel">
-                        <h3 class="border-bottom mb-3">Datos Personales</h3>
-                        <h5 style="font-weight: 700">País: {{ service.company.user.country.name }}</h5>
-                        <p><strong>Nombre:</strong> {{ service.company.user.first_name | titlecase }} {{ service.company.user.last_name | titlecase }}</p>
-                        <p><strong>Teléfono Contacto:</strong> {{ service.company.user.phone }}</p>
-                        <p><strong>E-mail:</strong> {{ service.company.user.email }}</p>
+          <ng-container *ngIf="service.company">
+            <ng-container *ngIf="service.status !== 'open'">
+              <li [ngbNavItem]="3">
+                <a ngbNavLink>Compañia</a>
+                <ng-template ngbNavContent>
+                  <ng-container *ngIf="service.company && service.company._id">
+                    <div class="row justify-content-center">
+                      <div class="col-md-10 mb-3">
+                        <div class="mt-4">
+                          <h4>
+                            <strong>
+                              {{service?.company?.name | titlecase}}
+                            </strong>
+                          </h4>
+                          <p><strong>Tipo Compañia:</strong> {{ service?.company?.typeCompany?.name | titlecase }}</p>
+                          <p><strong>Categorias:</strong>
+                            <span *ngFor="let cat of service?.company?.categories">
+                              {{ cat.name }},
+                            </span>
+                          </p>
+                          <p><strong>Método Pago:</strong>
+                            <span *ngFor="let paid of service?.company?.payment">
+                              {{ paid }},
+                            </span>
+                          </p>
+                          <h4><strong>Score:</strong> {{ service.company.user.score }}</h4>
+                        </div>
+                        <ng-container *ngIf="service.company && service.company.user">
+                          <div class="mt-4">
+                            <div class="panel">
+                              <h3 class="border-bottom mb-3">Datos Personales</h3>
+                              <h5 style="font-weight: 700">País: {{ service.company.user.country.name }}</h5>
+                              <p><strong>Nombre:</strong> {{ service.company.user.first_name | titlecase }} {{ service.company.user.last_name | titlecase }}</p>
+                              <p><strong>Teléfono Contacto:</strong> {{ service.company.user.phone }}</p>
+                              <p><strong>E-mail:</strong> {{ service.company.user.email }}</p>
 
+                            </div>
+                          </div>
+                        </ng-container>
                       </div>
                     </div>
                   </ng-container>
-                </div>
-              </div>
-            </ng-template>
-          </li>
+                </ng-template>
+              </li>
+            </ng-container>
+          </ng-container>
           <li [ngbNavItem]="4">
             <a ngbNavLink>CHAT</a>
             <ng-template ngbNavContent>
